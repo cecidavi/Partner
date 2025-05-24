@@ -1,4 +1,6 @@
 from flask import Blueprint, render_template
+from app.models.cliente import Cliente 
+from app import db
 
 public_bp = Blueprint('public', __name__)
 
@@ -12,6 +14,7 @@ def quienes_somos():
 
 @public_bp.route('/clientes')
 def clientes():
+    lista_clientes = Cliente.query.all()
     return render_template('clientes.html')
 
 @public_bp.route('/servicios')

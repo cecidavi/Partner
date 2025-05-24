@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block title %}Nuestros Clientes{% endblock %}
+
+{% block content %}
+<section class="clientes-section">
+    <h2>Nuestros Clientes</h2>
+    <div class="clientes-grid">
+        {% for cliente in clientes %}
+            <div class="cliente-card">
+                <a href="{{ cliente.link }}" target="_blank">
+                    <img src="{{ cliente.logo_url }}" alt="{{ cliente.nombre }}">
+                </a>
+                <p>{{ cliente.nombre }}</p>
+            </div>
+        {% endfor %}
+    </div>
+</section>
+{% endblock %}

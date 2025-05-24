@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Editar Producto - Admin</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/admin.css') }}">
+</head>
+<body>
+    <div class="admin-container">
+        <header class="admin-header">
+            <h1>Editar Producto</h1>
+            <nav>
+                <a href="{{ url_for('admin.productos_admin') }}">⬅ Volver a productos</a>
+                <a href="{{ url_for('auth.logout') }}">🔒 Cerrar Sesión</a>
+            </nav>
+        </header>
+
+        <main class="admin-main">
+            <section>
+                <form method="POST">
+                    {{ form.hidden_tag() }}
+                    <div>
+                        {{ form.nombre.label }}<br>
+                        {{ form.nombre(size=40) }}
+                    </div>
+                    <div>
+                        {{ form.descripcion.label }}<br>
+                        {{ form.descripcion(size=40) }}
+                    </div>
+                    <div>
+                        {{ form.imagen_url.label }}<br>
+                        {{ form.imagen_url(size=40) }}
+                    </div>
+                    <div>
+                        {{ form.precio.label }}<br>
+                        {{ form.precio(step="0.01") }}
+                    </div>
+                    <div>
+                        {{ form.estatus.label }}<br>
+                        {{ form.estatus() }}
+                    </div>
+                    <div style="margin-top: 10px;">
+                        <button type="submit">💾 Guardar Cambios</button>
+                        <a href="{{ url_for('admin.productos_admin') }}" style="margin-left: 10px;">Cancelar</a>
+                    </div>
+                </form>
+            </section>
+        </main>
+    </div>
+</body>
+</html>

@@ -2,7 +2,7 @@ body {
     font-family: 'Segoe UI', sans-serif;
     margin: 0;
     padding: 0;
-    background: #f4f6f8;
+    background: #eef1f5;
     color: #333;
 }
 
@@ -24,40 +24,103 @@ body {
 
 .admin-header h1 {
     margin: 0;
-    font-size: 24px;
+    font-size: 26px;
 }
 
 .admin-header nav a {
-    margin-left: 15px;
-    color: white;
+    margin-left: 20px;
+    color: #ffffff;
     text-decoration: none;
     font-weight: bold;
+    transition: color 0.3s ease;
 }
 
 .admin-header nav a:hover {
-    text-decoration: underline;
+    color: #ffdd57;
 }
 
 .admin-main {
     flex: 1;
     padding: 40px 20px;
+    max-width: 1000px;
+    margin: 0 auto;
 }
 
-.admin-welcome {
-    background: white;
+section {
+    background: #ffffff;
     border-radius: 8px;
     padding: 30px;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-    max-width: 600px;
-    margin: auto;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    margin-bottom: 40px;
 }
 
-.admin-welcome h2 {
+section h2 {
     margin-top: 0;
     color: #1e3c72;
+    font-size: 22px;
 }
 
-.admin-welcome p {
+input[type="text"],
+input[type="number"],
+select,
+button {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    margin-top: 8px;
+    margin-bottom: 16px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
     font-size: 16px;
-    margin-top: 10px;
+}
+
+button, .btn-edit, .btn-delete {
+    background-color: #1e3c72;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button:hover, .btn-edit:hover, .btn-delete:hover {
+    background-color: #16335e;
+}
+
+.btn-edit {
+    background-color: #ffc107;
+    margin-right: 5px;
+}
+
+.btn-delete {
+    background-color: #dc3545;
+}
+
+.table-container {
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+th, td {
+    text-align: center;
+    padding: 12px 10px;
+    border: 1px solid #ddd;
+}
+
+th {
+    background-color: #1e3c72;
+    color: white;
+}
+
+img {
+    max-width: 70px;
+    max-height: 50px;
+    object-fit: contain;
+    border-radius: 4px;
 }
