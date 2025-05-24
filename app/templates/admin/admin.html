@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Panel de Administración - PARNET</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/admin.css') }}">
+</head>
+<body>
+    <div class="admin-container">
+        <header class="admin-header">
+            <h1>Panel de Administración</h1>
+            <nav>
+                <a href="{{ url_for('admin.crear_usuario') }}">➕ Crear Usuario</a>
+                <a href="{{ url_for('admin.productos_admin') }}">📦 Productos</a>
+                <a href="{{ url_for('auth.logout') }}">🔒 Cerrar Sesión</a>
+            </nav>
+        </header>
+
+        <main class="admin-main">
+            <section class="admin-welcome">
+                <h2>Bienvenido, administrador</h2>
+                <p>Desde este panel puedes gestionar usuarios, productos, servicios y más.</p>
+            </section>
+        </main>
+    </div>
+</body>
+</html>

@@ -23,3 +23,14 @@ def crear_usuario():
         flash('Usuario creado exitosamente', 'success')
         return redirect(url_for('admin.admin_home'))
     return render_template('admin/crear_usuario.html', form=form)
+
+
+@admin_bp.route('/admin')
+@login_required
+def admin_home():
+    return render_template('admin/admin.html')
+
+@admin_bp.route('/admin/productos')
+@login_required
+def productos_admin():
+    return render_template('admin/productos_admin.html')  # Asegúrate de tener este HTML

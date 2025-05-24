@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Gestión de Productos - Admin</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/admin.css') }}">
+</head>
+<body>
+    <div class="admin-container">
+        <header class="admin-header">
+            <h1>Gestión de Productos</h1>
+            <nav>
+                <a href="{{ url_for('admin.admin_home') }}">⬅ Volver al panel</a>
+                <a href="{{ url_for('auth.logout') }}">🔒 Cerrar Sesión</a>
+            </nav>
+        </header>
+
+        <main class="admin-main">
+            <section>
+                <p>En esta sección podrás ver, agregar, editar o eliminar productos.</p>
+                <!-- Aquí irá el CRUD -->
+            </section>
+        </main>
+    </div>
+</body>
+</html>
