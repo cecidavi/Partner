@@ -15,7 +15,8 @@ def quienes_somos():
 @public_bp.route('/clientes')
 def clientes():
     lista_clientes = Cliente.query.all()
-    return render_template('clientes.html')
+    return render_template('clientes.html', clientes=lista_clientes)  # <-- aquí estaba el error
+
 
 @public_bp.route('/servicios')
 def servicios():
