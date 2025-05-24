@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block title %}Catálogo de Productos - Parnet Ingeniería{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2 class="mb-4 text-center text-white">Catálogo de Productos</h2>
+    <div class="row">
+        {% for producto in productos %}
+        <div class="col-md-4">
+            <div class="card mb-4">
+                <img src="{{ producto.imagen_url or url_for('static', filename='img/default.jpg') }}" class="card-img-top" alt="{{ producto.nombre }}">
+                <div class="card-body">
+                    <h5 class="card-title">{{ producto.nombre }}</h5>
+                    <p class="card-text">{{ producto.descripcion }}</p>
+                    <p class="card-text"><strong>${{ producto.precio }}</strong></p>
+                    <span class="badge bg-{{ 'success' if producto.estatus == 'existencia' else 'danger' }}">
+                        {{ producto.estatus }}
+                    </span>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
