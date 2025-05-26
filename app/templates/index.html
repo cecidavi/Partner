@@ -4,9 +4,10 @@
 
 {% block extra_css %}
 <style>
-/* Estilos específicos para la página principal */
 .inicio-section {
-    padding: 0;
+    padding: 0 20px;
+    max-width: 1000px;
+    margin: 0 auto;
 }
 
 .page-header {
@@ -19,48 +20,15 @@
     font-size: 14px;
 }
 
-/* Banner 10GbE Solutions */
-.solutions-banner {
-    background: linear-gradient(135deg, #87ceeb 0%, #4a90e2 100%);
-    border-radius: 12px;
-    overflow: hidden;
-    margin-bottom: 25px;
-    border: 2px solid rgba(255,255,255,0.3);
-    position: relative;
-}
-
-.solutions-content {
+.banner-wrapper {
     display: flex;
-    align-items: center;
-    padding: 20px;
-    gap: 20px;
-    min-height: 120px;
+    justify-content: center;
+    margin-bottom: 25px;
 }
 
-.solutions-text {
-    flex: 1;
-    z-index: 2;
-}
-
-.solutions-text h3 {
-    font-size: 36px;
-    font-weight: bold;
-    color: #2c3e50;
-    margin: 0;
-    line-height: 0.9;
-    text-shadow: 1px 1px 2px rgba(255,255,255,0.5);
-}
-
-.solutions-text p {
-    color: #2c3e50;
-    font-weight: bold;
-    font-size: 14px;
-    margin: 5px 0 0 0;
-}
-
-.solutions-image {
+.banner-img {
     width: 100%;
-    max-width: 1000px;
+    max-width: 600px;
     height: auto;
     border-radius: 8px;
     border: 2px solid rgba(255,255,255,0.5);
@@ -68,8 +36,6 @@
     object-fit: contain;
 }
 
-
-/* Secciones de contenido */
 .content-section {
     background: linear-gradient(135deg, #4a90e2 0%, #2a5298 100%);
     border-radius: 12px;
@@ -82,9 +48,9 @@
 }
 
 .section-image {
-    width: 180px;
-    height: 120px;
-    background: url('/placeholder.svg?height=120&width=180') center/cover;
+    width: 90px;
+    height: 90px;
+    background: url('/placeholder.svg?height=90&width=90') center/cover;
     border-radius: 8px;
     border: 2px solid rgba(255,255,255,0.3);
     flex-shrink: 0;
@@ -99,7 +65,7 @@
     color: #ffff00;
     font-size: 16px;
     font-weight: bold;
-    margin-bottom: 15px;
+    margin-bottom: 10px;
     text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
 }
 
@@ -110,7 +76,6 @@
     margin-bottom: 10px;
 }
 
-/* Sección de servicios de software */
 .software-services {
     background: linear-gradient(135deg, #2a5298 0%, #1e3c72 100%);
     border-radius: 12px;
@@ -129,7 +94,7 @@
 
 .services-list {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
     gap: 8px;
 }
 
@@ -150,27 +115,16 @@
     flex-shrink: 0;
 }
 
-/* Responsive */
 @media (max-width: 768px) {
-    .solutions-content {
-        flex-direction: column;
-        text-align: center;
-    }
-    
     .content-section {
         flex-direction: column;
     }
-    
+
     .section-image {
         width: 100%;
         height: 150px;
     }
-    
-    .solutions-image {
-        width: 100%;
-        height: 120px;
-    }
-    
+
     .services-list {
         grid-template-columns: 1fr;
     }
@@ -180,18 +134,14 @@
 
 {% block content %}
 <div class="inicio-section">
-    <!-- Header de Página Principal -->
     <div class="page-header">
         Página Principal
     </div>
 
-    <!-- Banner de Soluciones 10GbE -->
-    <div class="solutions-banner">
-        <img src="{{ url_for('static', filename='img/representacion.png') }}" alt="10GbE Solutions" class="solutions-image">
-        </div>
+    <div class="banner-wrapper">
+        <img src="{{ url_for('static', filename='img/representacion.png') }}" alt="10GbE Solutions" class="banner-img">
     </div>
 
-    <!-- Sección: Objetivo Principal de PARNET -->
     <div class="content-section">
         <div class="section-image"></div>
         <div class="section-text">
@@ -205,7 +155,6 @@
         </div>
     </div>
 
-    <!-- Sección: Energía Eléctrica -->
     <div class="content-section">
         <div class="section-image"></div>
         <div class="section-text">
@@ -214,45 +163,23 @@
                 Normalmente, las personas y los encargados de la informática en las empresas ven en los virus a los principales enemigos a combatir en sus PC's, no perdiendo información del negocio. No obstante, según la empresa de seguridad energética APC, el 94 por ciento de los daños de los equipos y la desaparición de datos en las computadoras es ocasionada por problemas asociados a la energía eléctrica.
             </div>
             <div class="section-content">
-                Picos, sobrevoltajes, trasientes, interrupciones, apagones y distorsiones, entre otros, son algunos de los males más comunes que sufre la energía eléctrica y que pueden mandar a la basura todas las inversiones que usted o su empresa han hecho en computadoras, televisores planos, teatros caseros, etc.
+                Picos, sobrevoltajes, trasientes, interrupciones, apagones y distorsiones son causas comunes de pérdida de hardware y productividad.
             </div>
         </div>
     </div>
 
-    <!-- Servicios de Software -->
     <div class="software-services">
         <div class="software-title">
             Con el afán de brindarle soluciones integrales, Parnet Ingeniería le ofrece desarrollo de software tales como:
         </div>
         <div class="services-list">
-            <div class="service-item">
-                <div class="service-bullet"></div>
-                <span>Aplicaciones a la Medida</span>
-            </div>
-            <div class="service-item">
-                <div class="service-bullet"></div>
-                <span>Aplicaciones Web</span>
-            </div>
-            <div class="service-item">
-                <div class="service-bullet"></div>
-                <span>Aplicaciones Cliente-Servidor</span>
-            </div>
-            <div class="service-item">
-                <div class="service-bullet"></div>
-                <span>Desarrollo de Aplicaciones Multimedia</span>
-            </div>
-            <div class="service-item">
-                <div class="service-bullet"></div>
-                <span>Software de Nómina para el control total de sus empleados</span>
-            </div>
-            <div class="service-item">
-                <div class="service-bullet"></div>
-                <span>Aplicaciones móviles para celulares y PDA's</span>
-            </div>
-            <div class="service-item">
-                <div class="service-bullet"></div>
-                <span>Bases de Datos</span>
-            </div>
+            <div class="service-item"><div class="service-bullet"></div><span>Aplicaciones a la Medida</span></div>
+            <div class="service-item"><div class="service-bullet"></div><span>Aplicaciones Web</span></div>
+            <div class="service-item"><div class="service-bullet"></div><span>Aplicaciones Cliente-Servidor</span></div>
+            <div class="service-item"><div class="service-bullet"></div><span>Desarrollo de Aplicaciones Multimedia</span></div>
+            <div class="service-item"><div class="service-bullet"></div><span>Software de Nómina para el control total de sus empleados</span></div>
+            <div class="service-item"><div class="service-bullet"></div><span>Aplicaciones móviles para celulares y PDA's</span></div>
+            <div class="service-item"><div class="service-bullet"></div><span>Bases de Datos</span></div>
         </div>
     </div>
 </div>
