@@ -1,5 +1,6 @@
-from flask import Blueprint, render_template
+from flask import Blueprint, render_template, request
 from app.models.cliente import Cliente 
+from app.models.producto import Producto
 from app import db
 
 public_bp = Blueprint('public', __name__)
@@ -24,7 +25,13 @@ def servicios():
 
 @public_bp.route('/producto')
 def productos():
-    return render_template('producto.html')
+    q = request.args.get('q', '')
+    if q:
+        productos = Producto.query.filter(Producto.nombre.ilike(f'%{q}%')).all()
+    else:
+        productos = Producto.query.all()
+    return render_template('producto.html', productos=productos)
+
 
 @public_bp.route('/casos_exito')
 def casos_exito():

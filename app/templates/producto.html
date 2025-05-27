@@ -2,24 +2,83 @@
 
 {% block title %}Catálogo de Productos - Parnet Ingeniería{% endblock %}
 
+{% block extra_css %}
+<style>
+.catalogo-section {
+    padding: 30px;
+    background: #f4f9fd;
+    border-radius: 8px;
+    font-size: 14px;
+    color: #003366;
+}
+
+.catalogo-section h1 {
+    color: #1e3c72;
+    margin-bottom: 20px;
+}
+
+.producto-busqueda {
+    margin-bottom: 20px;
+}
+
+.producto-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 20px;
+}
+
+.producto-card {
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    padding: 15px;
+    text-align: center;
+    transition: transform 0.2s;
+}
+
+.producto-card:hover {
+    transform: scale(1.03);
+}
+
+.producto-card img {
+    max-height: 120px;
+    object-fit: contain;
+    margin-bottom: 10px;
+    width: 100%;
+}
+
+.producto-nombre {
+    font-weight: bold;
+    color: #2a5298;
+}
+
+.producto-precio {
+    color: #009900;
+    font-weight: bold;
+}
+</style>
+{% endblock %}
+
 {% block content %}
-<div class="container mt-4">
-    <h2 class="mb-4 text-center text-white">Catálogo de Productos</h2>
-    <div class="row">
+<div class="catalogo-section">
+    <h1>Catálogo de Productos</h1>
+
+    <form method="GET" action="{{ url_for('public.productos') }}" class="producto-busqueda">
+        <input type="text" name="q" placeholder="Buscar producto..." value="{{ request.args.get('q', '') }}">
+        <button type="submit">Buscar</button>
+    </form>
+
+    <div class="producto-grid">
         {% for producto in productos %}
-        <div class="col-md-4">
-            <div class="card mb-4">
-                <img src="{{ producto.imagen_url or url_for('static', filename='img/default.jpg') }}" class="card-img-top" alt="{{ producto.nombre }}">
-                <div class="card-body">
-                    <h5 class="card-title">{{ producto.nombre }}</h5>
-                    <p class="card-text">{{ producto.descripcion }}</p>
-                    <p class="card-text"><strong>${{ producto.precio }}</strong></p>
-                    <span class="badge bg-{{ 'success' if producto.estatus == 'existencia' else 'danger' }}">
-                        {{ producto.estatus }}
-                    </span>
-                </div>
+            <div class="producto-card">
+                {% if producto.imagen_url %}
+                    <img src="{{ producto.imagen_url }}" alt="{{ producto.nombre }}">
+                {% else %}
+                    <img src="{{ url_for('static', filename='img/no-image.png') }}" alt="Sin imagen">
+                {% endif %}
+                <div class="producto-nombre">{{ producto.nombre }}</div>
+                <div class="producto-precio">${{ '%.2f' | format(producto.precio) }}</div>
             </div>
-        </div>
         {% endfor %}
     </div>
 </div>
