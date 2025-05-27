@@ -1,24 +1,86 @@
 {% extends "base.html" %}
-{% block title %}Servicios{% endblock %}
+{% block title %}Servicios - PARNET Ingeniería{% endblock %}
+
+{% block extra_css %}
+<style>
+.servicios-section {
+    padding: 30px;
+    background: #d6ecfa;
+    border-radius: 8px;
+    box-shadow: 0 0 8px rgba(0,0,0,0.1);
+    color: #003366;
+    font-size: 14px;
+    line-height: 1.8;
+}
+
+.servicios-section h1 {
+    color: #1e3c72;
+    margin-bottom: 20px;
+}
+
+.servicios-section h2 {
+    font-size: 16px;
+    margin-top: 25px;
+    color: #2a5298;
+}
+
+.software-columns {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 30px;
+    margin-top: 15px;
+}
+
+.software-columns ul {
+    list-style: square;
+    padding-left: 20px;
+    flex: 1;
+    min-width: 200px;
+    color: #003366;
+}
+
+.software-columns li {
+    margin-bottom: 10px;
+}
+</style>
+{% endblock %}
 
 {% block content %}
-
-<div class="container">
-    <h1 class="mt-5">Servicios</h1>
-    <p class="lead">Aquí puedes encontrar una lista de nuestros servicios.</p>
+<div class="servicios-section">
+    <h1>Servicios</h1>
+    <p class="lead">En Parnet Ingeniería nos especializamos en ofrecer soluciones integrales en telecomunicaciones, infraestructura y desarrollo de software adaptadas a las necesidades de cada cliente.</p>
     
     <div class="row">
         <div class="col-md-4">
-            <h2>Servicio 1</h2>
-            <p>Descripción del servicio 1.</p>
+            <h2>Redes y Telecomunicaciones</h2>
+            <p>Instalación y configuración de redes LAN/WAN, cableado estructurado, fibra óptica y soluciones de voz y datos.</p>
         </div>
         <div class="col-md-4">
-            <h2>Servicio 2</h2>
-            <p>Descripción del servicio 2.</p>
+            <h2>Seguridad Energética</h2>
+            <p>Protección contra sobrecargas, UPS, sistemas de respaldo y análisis de calidad de energía.</p>
         </div>
         <div class="col-md-4">
-            <h2>Servicio 3</h2>
-            <p>Descripción del servicio 3.</p>
+            <h2>Consultoría y Soporte Técnico</h2>
+            <p>Diagnóstico de infraestructura, soporte remoto y en sitio, y mantenimiento preventivo/correctivo.</p>
         </div>
     </div>
+
+    <hr>
+
+    <h2>Desarrollo de Software</h2>
+    <p><b>Con el afán de brindarle soluciones integrales, Parnet Ingeniería le ofrece desarrollo de software tales como:</b></p>
+    <div class="software-columns">
+        <ul>
+            <li><b>Aplicaciones a la Medida:</b> Desarrollo de soluciones específicas que se adaptan perfectamente a los procesos y requerimientos únicos de tu empresa.</li>
+            <li><b>Aplicaciones Cliente-Servidor:</b> Programas robustos que permiten la conexión de múltiples usuarios a una base de datos centralizada.</li>
+            <li><b>Software de Nómina:</b> Gestión automatizada de empleados, cálculos de pagos, control de asistencia y cumplimiento fiscal.</li>
+            <li><b>Bases de Datos:</b> Diseño y administración de estructuras de datos eficientes, seguras y escalables.</li>
+        </ul>
+        <ul>
+            <li><b>Aplicaciones Web:</b> Sistemas accesibles desde cualquier navegador, fáciles de mantener y con interfaz responsiva.</li>
+            <li><b>Aplicaciones Multimedia:</b> Herramientas interactivas con video, audio, animación y gráficos personalizados.</li>
+            <li><b>Aplicaciones móviles para PDA’s:</b> Desarrollo para dispositivos portátiles industriales que faciliten tareas de campo o inventarios.</li>
+        </ul>
+    </div>
+</div>
 {% endblock %}

@@ -1,6 +1,71 @@
 {% extends "base.html" %}
-{% block title %}Quines somos{% endblock %}
+{% block title %}¿Quiénes somos? - PARNET Ingeniería{% endblock %}
+
+{% block extra_css %}
+<style>
+.quienes-section {
+    padding: 30px;
+    background: #d6ecfa;
+    border-radius: 8px;
+    box-shadow: 0 0 8px rgba(0,0,0,0.1);
+    color: #003366;
+    font-size: 14px;
+    line-height: 1.8;
+}
+
+.quienes-img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 0 auto 30px auto;
+    border-radius: 6px;
+    box-shadow: 0 0 6px rgba(0,0,0,0.2);
+}
+
+.quienes-text h2 {
+    color: #1e3c72;
+    margin-top: 20px;
+    font-size: 18px;
+    border-bottom: 2px solid #2a5298;
+    padding-bottom: 5px;
+}
+
+.quienes-text p {
+    margin-bottom: 15px;
+    text-align: justify;
+}
+</style>
+{% endblock %}
 
 {% block content %}
+<div class="quienes-section">
+    <img src="{{ url_for('static', filename='img/somos.jpg') }}" alt="Equipo de trabajo PARNET" class="quienes-img">
+    
+    <div class="quienes-text">
+        <h2>¿Quiénes Somos?</h2>
+        <p><strong>Parnet Ingeniería S.A. de C.V.</strong> es una empresa mexicana dedicada a proveer soluciones tecnológicas integrales en telecomunicaciones, redes eléctricas, seguridad energética, infraestructura de datos y desarrollo de software a la medida.</p>
 
+        <p>Con más de 10 años de experiencia en el mercado, hemos logrado posicionarnos como una compañía confiable y profesional, colaborando tanto con instituciones gubernamentales como con empresas del sector privado.</p>
+
+        <h2>Misión</h2>
+        <p>Ofrecer soluciones tecnológicas de vanguardia que optimicen los procesos y mejoren la eficiencia operativa de nuestros clientes, contribuyendo a su éxito mediante productos, servicios y consultoría de alta calidad.</p>
+
+        <h2>Visión</h2>
+        <p>Ser líderes a nivel nacional en innovación tecnológica, ofreciendo servicios integrales que impacten positivamente en la productividad, seguridad y competitividad de nuestros clientes.</p>
+
+        <h2>Valores</h2>
+        <ul>
+            <li><strong>Compromiso:</strong> Cumplimos lo que prometemos con responsabilidad y excelencia.</li>
+            <li><strong>Innovación:</strong> Incorporamos continuamente nuevas tecnologías a nuestras soluciones.</li>
+            <li><strong>Calidad:</strong> Garantizamos estándares altos en cada uno de nuestros servicios.</li>
+            <li><strong>Honestidad:</strong> Fomentamos relaciones de confianza a largo plazo.</li>
+            <li><strong>Trabajo en equipo:</strong> Nuestra fuerza está en la colaboración interna y con nuestros clientes.</li>
+        </ul>
+
+        <h2>Clientes y Sectores</h2>
+        <p>Hemos colaborado con empresas del sector industrial, educativo, de servicios, financiero y gubernamental. Nuestro enfoque se adapta a cada sector, garantizando soluciones efectivas y personalizadas.</p>
+
+        <p>En <strong>PARNET Ingeniería</strong>, no solo proveemos servicios, sino que nos convertimos en aliados estratégicos en el crecimiento tecnológico de nuestros clientes.</p>
+    </div>
+</div>
 {% endblock %}
