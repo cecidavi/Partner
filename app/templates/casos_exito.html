@@ -1,6 +1,72 @@
 {% extends "base.html" %}
-{% block title %}Exitos{% endblock %}
+{% block title %}Casos de Éxito - PARNET Ingeniería{% endblock %}
+
+{% block extra_css %}
+<style>
+.casos-section {
+    padding: 30px 20px;
+}
+.casos-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit,minmax(250px,1fr));
+    gap: 20px;
+}
+.caso-card {
+    background: #ffffff;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    transition: transform .2s;
+}
+.caso-card:hover {
+    transform: translateY(-5px);
+}
+.caso-card img {
+    width: 100%;
+    height: 160px;
+    object-fit: cover;
+}
+.caso-content {
+    padding: 15px;
+}
+.caso-content h3 {
+    margin: 0 0 10px;
+    color: #1e3c72;
+    font-size: 18px;
+}
+.caso-content p {
+    font-size: 14px;
+    line-height: 1.5;
+    color: #333;
+}
+</style>
+{% endblock %}
 
 {% block content %}
-
+<section class="casos-section">
+  <h1>Casos de Éxito</h1>
+  <div class="casos-grid">
+    <div class="caso-card">
+      <img src="{{ url_for('static', filename='img/exito1.jpg') }}" alt="Imagen1">
+      <div class="caso-content">
+        <h3>Proyecto Gobierno Municipal</h3>
+        <p>Implementación de red de fibra óptica para el Ayuntamiento de Saltillo, mejorando un 50 % la velocidad interna.</p>
+      </div>
+    </div>
+    <div class="caso-card">
+      <img src="{{ url_for('static', filename='img/exito2.jpg') }}" alt="Imagen2">
+      <div class="caso-content">
+        <h3>Solución para Nestlé</h3>
+        <p>Despliegue de sistema de UPS y protección energética en planta de producción con 99.9 % de uptime.</p>
+      </div>
+    </div>
+    <div class="caso-card">
+      <img src="{{ url_for('static', filename='img/exito3.jpg') }}" alt="Imagen3">
+      <div class="caso-content">
+        <h3>Campus Coca-Cola</h3>
+        <p>Diseño e instalación de red inalámbrica para campus universitario con cobertura completa.</p>
+      </div>
+    </div>
+  </div>
+</section>
 {% endblock %}

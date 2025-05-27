@@ -1,6 +1,56 @@
 {% extends "base.html" %}
-{% block title %}Nuestros Socios{% endblock %}
+{% block title %}Socios - PARNET Ingeniería{% endblock %}
+
+{% block extra_css %}
+<style>
+.socios-section {
+    padding: 30px 20px;
+}
+.socios-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit,minmax(150px,1fr));
+    gap: 20px;
+    align-items: center;
+}
+.socio-card {
+    text-align: center;
+    background: #ffffff;
+    border-radius: 8px;
+    padding: 15px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    transition: transform .2s;
+}
+.socio-card:hover {
+    transform: translateY(-5px);
+}
+.socio-card img {
+    max-width: 100px;
+    margin-bottom: 10px;
+}
+.socio-card p {
+    font-size: 14px;
+    color: #333;
+}
+</style>
+{% endblock %}
 
 {% block content %}
-
+<section class="socios-section">
+  <h1>Nuestros Socios</h1>
+  <div class="socios-grid">
+    <div class="socio-card">
+      <img src="{{ url_for('static', filename='img/panduit.png') }}" alt="Panduit®">
+      <p>Panduit®</p>
+    </div>
+    <div class="socio-card">
+      <img src="{{ url_for('static', filename='img/cisco.png') }}" alt="Cisco Systems">
+      <p>Cisco Systems</p>
+    </div>
+    <div class="socio-card">
+      <img src="{{ url_for('static', filename='img/apc.png') }}" alt="APC">
+      <p>APC by Schneider Electric</p>
+    </div>
+    <!-- Añade más socios aquí -->
+  </div>
+</section>
 {% endblock %}
