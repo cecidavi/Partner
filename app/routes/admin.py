@@ -1,4 +1,5 @@
 # app/routes/admin.py
+
 from flask import (
     render_template, redirect, url_for, flash,
     Blueprint, request, send_file
@@ -19,13 +20,18 @@ from reportlab.lib.pagesizes import letter
 
 admin_bp = Blueprint('admin', __name__)
 
+# —————————————————————————————————————————————
 # Panel principal
+# —————————————————————————————————————————————
 @admin_bp.route('/admin')
 @login_required
 def admin_home():
     return render_template('admin/admin.html')
 
-# Crear usuario
+
+# —————————————————————————————————————————————
+# Usuarios
+# —————————————————————————————————————————————
 @admin_bp.route('/admin/crear-usuario', methods=['GET', 'POST'])
 @login_required
 def crear_usuario():
@@ -43,7 +49,10 @@ def crear_usuario():
         return redirect(url_for('admin.admin_home'))
     return render_template('admin/crear_usuario.html', form=form)
 
-# CRUD Productos
+
+# —————————————————————————————————————————————
+# Productos (CRUD)
+# —————————————————————————————————————————————
 @admin_bp.route('/admin/productos', methods=['GET', 'POST'])
 @login_required
 def productos_admin():
@@ -63,21 +72,23 @@ def productos_admin():
         return redirect(url_for('admin.productos_admin'))
     return render_template('admin/productos_admin.html', form=form, productos=productos)
 
+
 @admin_bp.route('/admin/productos/<int:producto_id>/editar', methods=['GET', 'POST'])
 @login_required
 def editar_producto(producto_id):
     producto = Producto.query.get_or_404(producto_id)
     form = ProductoForm(obj=producto)
     if form.validate_on_submit():
-        producto.nombre       = form.nombre.data
-        producto.descripcion  = form.descripcion.data
-        producto.imagen_url   = form.imagen_url.data
-        producto.precio       = form.precio.data
-        producto.estatus      = form.estatus.data
+        producto.nombre      = form.nombre.data
+        producto.descripcion = form.descripcion.data
+        producto.imagen_url  = form.imagen_url.data
+        producto.precio      = form.precio.data
+        producto.estatus     = form.estatus.data
         db.session.commit()
         flash('Producto actualizado correctamente.', 'success')
         return redirect(url_for('admin.productos_admin'))
     return render_template('admin/editar_producto.html', form=form, producto=producto)
+
 
 @admin_bp.route('/admin/productos/<int:producto_id>/eliminar', methods=['POST'])
 @login_required
@@ -88,9 +99,10 @@ def eliminar_producto(producto_id):
     flash('Producto eliminado.', 'info')
     return redirect(url_for('admin.productos_admin'))
 
-# ---------------------------------------------------
-# Gestión de Sugerencias
-# ---------------------------------------------------
+
+# —————————————————————————————————————————————
+# Sugerencias
+# —————————————————————————————————————————————
 
 # 1. Listado paginado
 @admin_bp.route('/admin/sugerencias')
@@ -100,7 +112,7 @@ def lista_sugerencias():
     per_page = 10
     pagination = Sugerencia.query \
         .order_by(Sugerencia.fecha.desc()) \
-        .paginate(page, per_page, error_out=False)
+        .paginate(page=page, per_page=per_page, error_out=False)
     return render_template(
         'admin/lista_sugerencias.html',
         sugerencias=pagination.items,
@@ -113,10 +125,10 @@ def lista_sugerencias():
 def exportar_sugerencias_excel():
     todas = Sugerencia.query.order_by(Sugerencia.fecha).all()
     df = pd.DataFrame([{
-        'ID': s.id,
+        'ID':     s.id,
         'Nombre': s.nombre,
         'Mensaje': s.mensaje,
-        'Fecha': s.fecha.strftime('%Y-%m-%d %H:%M')
+        'Fecha':  s.fecha.strftime('%Y-%m-%d %H:%M')
     } for s in todas])
     salida = io.BytesIO()
     df.to_excel(salida, index=False, engine='openpyxl')
@@ -148,3 +160,4 @@ def exportar_sugerencias_pdf():
         as_attachment=True,
         mimetype='application/pdf'
     )
+
