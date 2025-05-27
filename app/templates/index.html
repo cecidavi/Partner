@@ -26,31 +26,22 @@
 }
 .slides {
   display: flex;
-  width: 300%;                 /* 3 imágenes */
-  animation: slide-animation 18s ease-in-out infinite;
+  width: 300%;
+  animation: slide-animation 12s infinite;
 }
 .slide {
-  flex: 0 0 100%;
-  height: auto;                /* mantiene la proporción */
-  object-fit: contain;
+  width: 100%;
+  height: auto;         /* mantiene la proporción natural */
+  object-fit: contain;   /* ajusta la imagen sin estirarla */
 }
-
-/* Keyframes ajustados:
-   - 0–30%: imagen 1
-   - 30–60%: imagen 2
-   - 60–90%: imagen 3
-   - 90–100%: transición de vuelta */
 @keyframes slide-animation {
-  0%     { transform: translateX(0); }
-  30%    { transform: translateX(0); }
-  33.33% { transform: translateX(-100%); }
-  60%    { transform: translateX(-100%); }
-  63.33% { transform: translateX(-200%); }
-  90%    { transform: translateX(-200%); }
-  100%   { transform: translateX(0); }
+  0%, 20%   { transform: translateX(0); }
+  33%, 53%  { transform: translateX(-100%); }
+  66%, 86%  { transform: translateX(-200%); }
+  100%      { transform: translateX(0); }
 }
 
-/* Secciones de texto */
+/* Secciones de texto con imagen */
 .section {
     display: flex;
     gap: 20px;
@@ -66,7 +57,9 @@
     height: auto;
     border-radius: 4px;
 }
-.section-content { flex: 1; }
+.section-content {
+    flex: 1;
+}
 .section-title {
     font-weight: bold;
     color: #ffe600;
@@ -81,7 +74,9 @@
     border-radius: 6px;
     font-size: 13px;
 }
-.software-section b { color: #ffe600; }
+.software-section b {
+    color: #ffe600;
+}
 .software-columns {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
@@ -93,7 +88,9 @@
     padding-left: 18px;
     margin: 0;
 }
-.software-columns li { margin-bottom: 5px; }
+.software-columns li {
+    margin-bottom: 5px;
+}
 </style>
 {% endblock %}
 
@@ -105,6 +102,8 @@
   <div class="slider">
     <div class="slides">
       <img src="{{ url_for('static', filename='img/representacion_flash.png') }}" alt="Imagen 1" class="slide">
+      <img src="{{ url_for('static', filename='img/Callcentre.png') }}"           alt="Imagen 2" class="slide">
+      <img src="{{ url_for('static', filename='img/Imax.png') }}"                 alt="Imagen 3" class="slide">
     </div>
   </div>
 
