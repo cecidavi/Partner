@@ -11,8 +11,6 @@
         <header class="admin-header">
             <h1>Panel de Administración</h1>
             <nav>
-                <a href="{{ url_for('admin.crear_usuario') }}">➕ Crear Usuario</a>
-                <a href="{{ url_for('admin.productos_admin') }}">📦 Productos</a>
                 <a href="{{ url_for('auth.logout') }}">🔒 Cerrar Sesión</a>
             </nav>
         </header>
@@ -21,6 +19,12 @@
             <section class="admin-welcome">
                 <h2>Bienvenido, administrador</h2>
                 <p>Desde este panel puedes gestionar usuarios, productos, servicios y más.</p>
+            </section>
+
+            <section class="admin-actions">
+                <a href="{{ url_for('admin.crear_usuario') }}" class="action-card">➕ Crear Usuario</a>
+                <a href="{{ url_for('admin.productos_admin') }}" class="action-card">📦 Productos</a>
+                <a href="{{ url_for('admin.lista_sugerencias') }}" class="action-card">💡 Sugerencias</a>
             </section>
         </main>
     </div>

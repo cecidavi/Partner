@@ -1,0 +1,35 @@
+{% extends "admin/admin.html" %}
+{% block admin_content %}
+<section class="admin-section">
+  <h2>📋 Listado de Sugerencias</h2>
+  <div class="export-buttons">
+    <a href="{{ url_for('admin.exportar_sugerencias_excel') }}">Exportar a Excel</a> |
+    <a href="{{ url_for('admin.exportar_sugerencias_pdf') }}">Exportar a PDF</a>
+  </div>
+  <table class="admin-table">
+    <thead>
+      <tr><th>ID</th><th>Nombre</th><th>Mensaje</th><th>Fecha</th></tr>
+    </thead>
+    <tbody>
+      {% for s in sugerencias %}
+      <tr>
+        <td>{{ s.id }}</td>
+        <td>{{ s.nombre }}</td>
+        <td>{{ s.mensaje }}</td>
+        <td>{{ s.fecha.strftime('%Y-%m-%d %H:%M') }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  <div class="pagination">
+    {% if pagination.has_prev %}
+      <a href="{{ url_for('admin.lista_sugerencias', page=pagination.prev_num) }}">« Anterior</a>
+    {% endif %}
+    Página {{ pagination.page }} de {{ pagination.pages }}
+    {% if pagination.has_next %}
+      <a href="{{ url_for('admin.lista_sugerencias', page=pagination.next_num) }}">Siguiente »</a>
+    {% endif %}
+  </div>
+</section>
+{% endblock %}

@@ -124,3 +124,44 @@ img {
     object-fit: contain;
     border-radius: 4px;
 }
+
+/* Contenedor de tarjetas de acción */
+.admin-actions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 30px;
+}
+
+/* Tarjeta individual */
+.action-card {
+    background: #ffffff;
+    border-radius: 8px;
+    padding: 25px 20px;
+    width: 180px;
+    text-align: center;
+    text-decoration: none;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    color: inherit;
+}
+
+/* Icono dentro de la tarjeta */
+.action-card .action-icon {
+    font-size: 36px;
+    margin-bottom: 12px;
+}
+
+/* Texto de la tarjeta */
+.action-card .action-text {
+    font-size: 16px;
+    font-weight: bold;
+    color: #1e3c72;
+}
+
+/* Hover sobre la tarjeta */
+.action-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 16px rgba(0,0,0,0.12);
+}
