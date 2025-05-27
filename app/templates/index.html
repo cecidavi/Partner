@@ -1,8 +1,10 @@
+{# templates/index.html #}
 {% extends "base.html" %}
 {% block title %}Inicio - PARNET Ingeniería{% endblock %}
 
 {% block extra_css %}
 <style>
+/* Header pequeño */
 .page-header {
     background-color: #1e3c72;
     color: white;
@@ -13,15 +15,42 @@
     border-radius: 4px;
 }
 
-.banner-img {
-    width: 100%;
-    max-width: 720px;
-    height: auto;
-    display: block;
-    margin: 0 auto 20px auto;
-    border-radius: 4px;
+/* Slider */
+.slider {
+  position: relative;
+  width: 100%;
+  max-width: 720px;
+  margin: 0 auto 20px;
+  overflow: hidden;
+  border-radius: 6px;
+}
+.slides {
+  display: flex;
+  width: 300%;                 /* 3 imágenes */
+  animation: slide-animation 18s ease-in-out infinite;
+}
+.slide {
+  flex: 0 0 100%;
+  height: auto;                /* mantiene la proporción */
+  object-fit: contain;
 }
 
+/* Keyframes ajustados:
+   - 0–30%: imagen 1
+   - 30–60%: imagen 2
+   - 60–90%: imagen 3
+   - 90–100%: transición de vuelta */
+@keyframes slide-animation {
+  0%     { transform: translateX(0); }
+  30%    { transform: translateX(0); }
+  33.33% { transform: translateX(-100%); }
+  60%    { transform: translateX(-100%); }
+  63.33% { transform: translateX(-200%); }
+  90%    { transform: translateX(-200%); }
+  100%   { transform: translateX(0); }
+}
+
+/* Secciones de texto */
 .section {
     display: flex;
     gap: 20px;
@@ -32,23 +61,19 @@
     color: white;
     align-items: center;
 }
-
 .section img {
     width: 200px;
     height: auto;
     border-radius: 4px;
 }
-
-.section-content {
-    flex: 1;
-}
-
+.section-content { flex: 1; }
 .section-title {
     font-weight: bold;
     color: #ffe600;
     margin-bottom: 8px;
 }
 
+/* Sección de software */
 .software-section {
     background: #083f75;
     color: white;
@@ -56,75 +81,76 @@
     border-radius: 6px;
     font-size: 13px;
 }
-
-.software-section b {
-    color: #ffe600;
-}
-
+.software-section b { color: #ffe600; }
 .software-columns {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
     margin-top: 10px;
     gap: 10px;
 }
-
 .software-columns ul {
     list-style: square;
     padding-left: 18px;
     margin: 0;
 }
-
-.software-columns li {
-    margin-bottom: 5px;
-}
+.software-columns li { margin-bottom: 5px; }
 </style>
 {% endblock %}
 
 {% block content %}
-<div class="page-header">Página Principal</div>
+  <!-- Título -->
+  <div class="page-header">Página Principal</div>
 
-<img src="{{ url_for('static', filename='img/representacion_flash.png') }}" alt="Banner" class="banner-img">
-
-<div class="section">
-    <img src="{{ url_for('static', filename='img/Callcentre.png') }}" alt="Imagen 2">
-    <div class="section-content">
-        <div class="section-title">¿Cuál es el objetivo principal de PARNET?</div>
-        <p>
-            Nuestra empresa tiene como objetivo suministrar soluciones integrales en telecomunicaciones (Voz y datos), eléctricas que resuelvan las necesidades empresariales con productos, aplicaciones, servicios y consultoría de punta.
-        </p>
-        <p>
-            Buscamos mantener el trabajo al más alto nivel de excelencia y calidad, brindando alta confiabilidad, incrementando los índices de productividad y competitividad de su empresa y del personal de la misma.
-        </p>
+  <!-- Slider -->
+  <div class="slider">
+    <div class="slides">
+      <img src="{{ url_for('static', filename='img/representacion_flash.png') }}" alt="Imagen 1" class="slide">
     </div>
-</div>
+  </div>
 
-<div class="section">
-    <img src="{{ url_for('static', filename='img/Imax.png') }}" alt="Imagen 3">
+  <!-- Sección 1 -->
+  <div class="section">
+    <img src="{{ url_for('static', filename='img/Callcentre.png') }}" alt="Objetivo PARNET">
     <div class="section-content">
-        <div class="section-title">¿Hay buena energía dentro de su empresa?</div>
-        <p>
-            Normalmente, las personas ven en los virus a los principales enemigos a combatir en sus PC. Sin embargo, el 94% de los daños a equipos y pérdida de datos están relacionados con problemas de energía eléctrica.
-        </p>
-        <p>
-            Picos, sobrevoltajes, interrupciones y distorsiones pueden provocar daños costosos y pérdida de productividad.
-        </p>
+      <div class="section-title">¿Cuál es el objetivo principal de PARNET?</div>
+      <p>
+        Nuestra empresa tiene como objetivo suministrar soluciones integrales en telecomunicaciones (Voz y datos), eléctricas que resuelvan las necesidades empresariales con productos, aplicaciones, servicios y consultoría de punta.
+      </p>
+      <p>
+        Buscamos mantener el trabajo al más alto nivel de excelencia y calidad, brindando alta confiabilidad, incrementando los índices de productividad y competitividad de su empresa y del personal de la misma.
+      </p>
     </div>
-</div>
+  </div>
 
-<div class="software-section">
+  <!-- Sección 2 -->
+  <div class="section">
+    <img src="{{ url_for('static', filename='img/Imax.png') }}" alt="Energía Eléctrica">
+    <div class="section-content">
+      <div class="section-title">¿Hay buena energía dentro de su empresa?</div>
+      <p>
+        Normalmente, las personas ven en los virus a los principales enemigos a combatir en sus PC. Sin embargo, el 94 % de los daños a equipos y pérdida de datos están relacionados con problemas de energía eléctrica.
+      </p>
+      <p>
+        Picos, sobrevoltajes, interrupciones y distorsiones pueden provocar daños costosos y pérdida de productividad.
+      </p>
+    </div>
+  </div>
+
+  <!-- Sección de Software -->
+  <div class="software-section">
     <b>Con el afán de brindarle soluciones integrales, Parnet Ingeniería le ofrece desarrollo de software tales como:</b>
     <div class="software-columns">
-        <ul>
-            <li>Aplicaciones a la Medida</li>
-            <li>Aplicaciones Cliente-Servidor</li>
-            <li>Software de Nómina</li>
-            <li>Bases de Datos</li>
-        </ul>
-        <ul>
-            <li>Aplicaciones Web</li>
-            <li>Aplicaciones Multimedia</li>
-            <li>Aplicaciones móviles para PDA’s</li>
-        </ul>
+      <ul>
+        <li>Aplicaciones a la Medida</li>
+        <li>Aplicaciones Cliente-Servidor</li>
+        <li>Software de Nómina</li>
+        <li>Bases de Datos</li>
+      </ul>
+      <ul>
+        <li>Aplicaciones Web</li>
+        <li>Aplicaciones Multimedia</li>
+        <li>Aplicaciones móviles para PDA’s</li>
+      </ul>
     </div>
-</div>
+  </div>
 {% endblock %}
