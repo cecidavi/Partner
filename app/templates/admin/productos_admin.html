@@ -1,86 +1,115 @@
+<!-- templates/admin/productos_admin.html -->
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <title>Gestión de Productos - Admin</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/admin.css') }}">
-    <style>
-        img.product-img {
-            width: 60px;
-            height: auto;
-            border-radius: 4px;
-        }
-        .btn-edit, .btn-delete {
-            margin-right: 5px;
-        }
-        .form-inline {
-            display: inline;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <title>Gestión de Productos - Admin</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/admin.css') }}">
 </head>
 <body>
-<div class="admin-container">
+  <div class="admin-container">
+
+    <!-- HEADER -->
     <header class="admin-header">
-        <h1>Gestión de Productos</h1>
-        <nav>
-            <a href="{{ url_for('admin.admin_home') }}">⬅ Volver al panel</a>
-            <a href="{{ url_for('auth.logout') }}">🔒 Cerrar Sesión</a>
-        </nav>
+      <h1>Gestión de Productos</h1>
+      <nav>
+        <a href="{{ url_for('admin.admin_home') }}">⬅ Volver al panel</a>
+        <a href="{{ url_for('auth.logout') }}">🔒 Cerrar Sesión</a>
+      </nav>
     </header>
 
+    <!-- MAIN -->
     <main class="admin-main">
-        <section>
-            <h2>Agregar Producto</h2>
-            <form method="POST">
-                {{ form.hidden_tag() }}
-                <p>{{ form.nombre.label }}<br>{{ form.nombre(size=40) }}</p>
-                <p>{{ form.descripcion.label }}<br>{{ form.descripcion(size=40) }}</p>
-                <p>{{ form.imagen_url.label }}<br>{{ form.imagen_url(size=40) }}</p>
-                <p>{{ form.precio.label }}<br>{{ form.precio(step="0.01") }}</p>
-                <p>{{ form.estatus.label }}<br>{{ form.estatus() }}</p>
-                <p>{{ form.submit(class_="btn btn-success") }}</p>
-            </form>
-        </section>
 
-        <hr>
+      <!-- BOTÓN EXPORTAR EXCEL -->
+      <div class="product-export-container">
+        <a href="{{ url_for('admin.export_productos_excel') }}" class="btn-export">
+          Descargar Excel de Productos
+        </a>
+      </div>
 
-        <section>
-            <h2>Lista de Productos</h2>
-            <table border="1" cellpadding="10">
-                <tr>
-                    <th>ID</th>
-                    <th>Nombre</th>
-                    <th>Descripción</th>
-                    <th>Precio</th>
-                    <th>Estatus</th>
-                    <th>Imagen</th>
-                    <th>Acciones</th>
-                </tr>
-                {% for p in productos %}
-                <tr>
-                    <td>{{ p.id }}</td>
-                    <td>{{ p.nombre }}</td>
-                    <td>{{ p.descripcion }}</td>
-                    <td>${{ "%.2f"|format(p.precio) }}</td>
-                    <td>{{ p.estatus }}</td>
-                    <td>
-                        {% if p.imagen_url %}
-                            <img src="{{ p.imagen_url }}" alt="Imagen" class="product-img">
-                        {% else %}
-                            Sin imagen
-                        {% endif %}
-                    </td>
-                    <td>
-                        <a href="{{ url_for('admin.editar_producto', producto_id=p.id) }}" class="btn-edit">✏️</a>
-                        <form action="{{ url_for('admin.eliminar_producto', producto_id=p.id) }}" method="POST" class="form-inline" onsubmit="return confirm('¿Seguro que deseas eliminar este producto?');">
-                            <button type="submit" class="btn-delete">🗑️</button>
-                        </form>
-                    </td>
-                </tr>
-                {% endfor %}
-            </table>
-        </section>
+      <!-- SECCIÓN: AGREGAR PRODUCTO -->
+      <section>
+        <h2>Agregar Producto</h2>
+        <form method="POST">
+          {{ form.hidden_tag() }}
+          <p>
+            {{ form.nombre.label }}<br>
+            {{ form.nombre(size=40) }}
+          </p>
+          <p>
+            {{ form.descripcion.label }}<br>
+            {{ form.descripcion(size=40) }}
+          </p>
+          <p>
+            {{ form.imagen_url.label }}<br>
+            {{ form.imagen_url(size=40) }}
+          </p>
+          <p>
+            {{ form.precio.label }}<br>
+            {{ form.precio(step="0.01") }}
+          </p>
+          <p>
+            {{ form.estatus.label }}<br>
+            {{ form.estatus() }}
+          </p>
+          <p>
+            {{ form.submit(class_="btn btn-success") }}
+          </p>
+        </form>
+      </section>
+
+      <hr>
+
+      <!-- SECCIÓN: LISTA DE PRODUCTOS -->
+      <section>
+        <h2>Lista de Productos</h2>
+        <div class="table-container">
+          <table>
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Descripción</th>
+                <th>Precio</th>
+                <th>Estatus</th>
+                <th>Imagen</th>
+                <th>Acciones</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for p in productos %}
+              <tr>
+                <td>{{ p.id }}</td>
+                <td>{{ p.nombre }}</td>
+                <td>{{ p.descripcion }}</td>
+                <td>${{ '%.2f'|format(p.precio) }}</td>
+                <td>{{ p.estatus }}</td>
+                <td>
+                  {% if p.imagen_url %}
+                    <img src="{{ p.imagen_url }}" alt="{{ p.nombre }}" class="product-img">
+                  {% else %}
+                    Sin imagen
+                  {% endif %}
+                </td>
+                <td>
+                  <a href="{{ url_for('admin.editar_producto', producto_id=p.id) }}" class="btn-edit">✏️</a>
+                  <form action="{{ url_for('admin.eliminar_producto', producto_id=p.id) }}"
+                        method="POST" class="form-inline"
+                        onsubmit="return confirm('¿Seguro que deseas eliminar este producto?');">
+                    <button type="submit" class="btn-delete">🗑️</button>
+                  </form>
+                </td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </section>
+
     </main>
-</div>
+    <!-- FIN MAIN -->
+
+  </div>
 </body>
 </html>

@@ -212,3 +212,24 @@ img {
 .pagination .btn:hover {
     background-color: #16335e;
 }
+
+/* ————————————— EXPORTAR PRODUCTOS (Excel) ————————————— */
+.product-export-container {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 1.5rem;
+}
+.product-export-container .btn-export {
+    background-color: #28a745;
+    color: #fff;
+    padding: 0.6rem 1.2rem;
+    font-size: 0.9rem;
+    font-weight: 600;
+    border-radius: 4px;
+    text-decoration: none;
+    transition: background-color 0.2s ease, transform 0.2s ease;
+}
+.product-export-container .btn-export:hover {
+    background-color: #218838;
+    transform: translateY(-2px);
+}

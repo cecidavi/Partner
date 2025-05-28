@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block title %}Detalle de Producto - Parnet Ingeniería{% endblock %}
+
+{% block content %}
+<div class="detalle-producto">
+  <h2>{{ producto.nombre }}</h2>
+  <p>{{ producto.descripcion }}</p>
+  <p><strong>Precio:</strong> ${{ '%.2f'|format(producto.precio) }}</p>
+  <p><strong>Estatus:</strong> {{ producto.estatus }}</p>
+  <a href="{{ url_for('public.export_producto_pdf', producto_id=producto.id) }}" class="btn btn-primary">
+    Descargar ficha PDF
+  </a>
+</div>
+{% endblock %}

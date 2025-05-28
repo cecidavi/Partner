@@ -28,7 +28,6 @@ admin_bp = Blueprint('admin', __name__)
 def admin_home():
     return render_template('admin/admin.html')
 
-
 # —————————————————————————————————————————————
 # Usuarios
 # —————————————————————————————————————————————
@@ -48,7 +47,6 @@ def crear_usuario():
         flash('Usuario creado exitosamente.', 'success')
         return redirect(url_for('admin.admin_home'))
     return render_template('admin/crear_usuario.html', form=form)
-
 
 # —————————————————————————————————————————————
 # Productos (CRUD)
@@ -72,7 +70,6 @@ def productos_admin():
         return redirect(url_for('admin.productos_admin'))
     return render_template('admin/productos_admin.html', form=form, productos=productos)
 
-
 @admin_bp.route('/admin/productos/<int:producto_id>/editar', methods=['GET', 'POST'])
 @login_required
 def editar_producto(producto_id):
@@ -89,7 +86,6 @@ def editar_producto(producto_id):
         return redirect(url_for('admin.productos_admin'))
     return render_template('admin/editar_producto.html', form=form, producto=producto)
 
-
 @admin_bp.route('/admin/productos/<int:producto_id>/eliminar', methods=['POST'])
 @login_required
 def eliminar_producto(producto_id):
@@ -99,11 +95,38 @@ def eliminar_producto(producto_id):
     flash('Producto eliminado.', 'info')
     return redirect(url_for('admin.productos_admin'))
 
+# —————————————————————————————————————————————
+# Exportar Productos a Excel
+# —————————————————————————————————————————————
+@admin_bp.route('/admin/productos/export_excel')
+@login_required
+def export_productos_excel():
+    productos = Producto.query.order_by(Producto.id.desc()).all()
+    # Preparar datos
+    data = [{
+        'ID': p.id,
+        'Nombre': p.nombre,
+        'Descripción': p.descripcion,
+        'Precio': float(p.precio),
+        'Estatus': p.estatus
+    } for p in productos]
+
+    # Crear DataFrame y exportar a Excel
+    df = pd.DataFrame(data)
+    salida = io.BytesIO()
+    df.to_excel(salida, index=False, engine='openpyxl')
+    salida.seek(0)
+
+    return send_file(
+        salida,
+        download_name='productos_listado.xlsx',
+        as_attachment=True,
+        mimetype='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+    )
 
 # —————————————————————————————————————————————
 # Sugerencias
 # —————————————————————————————————————————————
-
 # 1. Listado paginado
 @admin_bp.route('/admin/sugerencias')
 @login_required
@@ -160,4 +183,3 @@ def exportar_sugerencias_pdf():
         as_attachment=True,
         mimetype='application/pdf'
     )
-
