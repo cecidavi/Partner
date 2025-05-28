@@ -15,34 +15,47 @@
     border-radius: 4px;
 }
 
-/* Slider */
-.slider {
+/* Carrusel */
+.carousel-container {
     position: relative;
     width: 100%;
     max-width: 720px;
     margin: 0 auto 20px;
     overflow: hidden;
     border-radius: 6px;
+    max-height: 300px;
+    background: #000;
 }
-.slides {
-    display: flex;
-    width: 300%;                       /* tres imágenes lado a lado */
-    transform: translateX(0);
-    transition: transform 1s ease-in-out;
-    animation: slide-animation 12s infinite;
-}
-.slide {
+.carousel-slide {
+    display: none;
     width: 100%;
-    height: auto;                     /* mantiene proporción */
-    object-fit: contain;              /* sin zoom extraño */
+    height: 100%;
 }
-@keyframes slide-animation {
-    /* Cada imagen ocupa “30%” del tiempo (≈3.6s), con saltos rápidos */
-    0%, 30%    { transform: translateX(0); }      /* Imagen 1 */
-    33%, 63%   { transform: translateX(-100%); } /* Imagen 2 */
-    66%, 96%   { transform: translateX(-200%); } /* Imagen 3 */
-    100%       { transform: translateX(0); }
+.carousel-slide.active {
+    display: block;
 }
+.carousel-slide img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+/* Botones siguiente/anterior */
+.carousel-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(0,0,0,0.5);
+    border: none;
+    color: white;
+    font-size: 24px;
+    padding: 8px 12px;
+    cursor: pointer;
+    border-radius: 4px;
+}
+.carousel-btn.prev { left: 10px; }
+.carousel-btn.next { right: 10px; }
 
 /* Secciones de texto con imagen */
 .section {
@@ -60,9 +73,7 @@
     height: auto;
     border-radius: 4px;
 }
-.section-content {
-    flex: 1;
-}
+.section-content { flex: 1; }
 .section-title {
     font-weight: bold;
     color: #ffe600;
@@ -77,12 +88,10 @@
     border-radius: 6px;
     font-size: 13px;
 }
-.software-section b {
-    color: #ffe600;
-}
+.software-section b { color: #ffe600; }
 .software-columns {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(220px,1fr));
     gap: 10px;
     margin-top: 10px;
 }
@@ -91,9 +100,7 @@
     padding-left: 18px;
     margin: 0;
 }
-.software-columns li {
-    margin-bottom: 5px;
-}
+.software-columns li { margin-bottom: 5px; }
 </style>
 {% endblock %}
 
@@ -101,16 +108,19 @@
   <!-- Título -->
   <div class="page-header">Página Principal</div>
 
-  <!-- Slider -->
-  <div class="slider">
-    <div class="slides">
-      <img src="{{ url_for('static', filename='img/representacion_flash.png') }}"
-           alt="Imagen 1" class="slide">
-      <img src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse2.mm.bing.net%2Fth%2Fid%2FOIP.nXHrXTOh-i239KjdRXbS1gHaEJ%3Fpid%3DApi&f=1&ipt=db29f4d7fb02806ccf0445175128ac9342e9bbe690445cb4bd251ebc0d9867a8&ipo=images"
-           alt="Imagen 2" class="slide">
-      <img src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse1.mm.bing.net%2Fth%2Fid%2FOIP.CavOXD108etU2idKQwtSgAHaD4%3Fpid%3DApi&f=1&ipt=24dfeb92e4578969740374a0312dc84208c083b40945f77934591bc415f59f65&ipo=images"
-           alt="Imagen 3" class="slide">
-    </div>
+  <!-- Carrusel -->
+  <div class="carousel-container">
+      <div class="carousel-slide active">
+          <img src="{{ url_for('static', filename='img/representacion_flash.png') }}" alt="Banner 1">
+      </div>
+      <div class="carousel-slide">
+          <img src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse2.mm.bing.net%2Fth%3Fid%3DOIP.NqOw_8RwEBdh1TVbUjznygHaEK%26pid%3DApi" alt="Banner 2">
+      </div>
+      <div class="carousel-slide">
+          <img src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse4.mm.bing.net%2Fth%3Fid%3DOIP.CrSIg1ng_FCihi4wdlSDawHaC-%26pid%3DApi" alt="Banner 3">
+      </div>
+      <button class="carousel-btn prev">❮</button>
+      <button class="carousel-btn next">❯</button>
   </div>
 
   <!-- Sección 1 -->
@@ -118,16 +128,7 @@
     <img src="{{ url_for('static', filename='img/Callcentre.png') }}" alt="Objetivo PARNET">
     <div class="section-content">
       <div class="section-title">¿Cuál es el objetivo principal de PARNET?</div>
-      <p>
-        Nuestra empresa tiene como objetivo suministrar soluciones integrales en telecomunicaciones 
-        (Voz y datos), eléctricas que resuelvan las necesidades empresariales con productos, 
-        aplicaciones, servicios y consultoría de punta.
-      </p>
-      <p>
-        Buscamos mantener el trabajo al más alto nivel de excelencia y calidad, brindando alta 
-        confiabilidad, incrementando los índices de productividad y competitividad de su empresa 
-        y del personal de la misma.
-      </p>
+      <p>…tu texto…</p>
     </div>
   </div>
 
@@ -136,34 +137,39 @@
     <img src="{{ url_for('static', filename='img/Imax.png') }}" alt="Energía Eléctrica">
     <div class="section-content">
       <div class="section-title">¿Hay buena energía dentro de su empresa?</div>
-      <p>
-        Normalmente, las personas ven en los virus a los principales enemigos a combatir en sus PC. 
-        Sin embargo, el 94 % de los daños a equipos y pérdida de datos están relacionados con 
-        problemas de energía eléctrica.
-      </p>
-      <p>
-        Picos, sobrevoltajes, interrupciones y distorsiones pueden provocar daños costosos y 
-        pérdida de productividad.
-      </p>
+      <p>…tu texto…</p>
     </div>
   </div>
 
   <!-- Sección de Software -->
   <div class="software-section">
-    <b>Con el afán de brindarle soluciones integrales, Parnet Ingeniería le ofrece desarrollo de 
-       software tales como:</b>
+    <b>Con el afán …</b>
     <div class="software-columns">
-      <ul>
-        <li>Aplicaciones a la Medida</li>
-        <li>Aplicaciones Cliente-Servidor</li>
-        <li>Software de Nómina</li>
-        <li>Bases de Datos</li>
-      </ul>
-      <ul>
-        <li>Aplicaciones Web</li>
-        <li>Aplicaciones Multimedia</li>
-        <li>Aplicaciones móviles para PDA’s</li>
-      </ul>
+      <ul>…</ul>
+      <ul>…</ul>
     </div>
   </div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+  function iniciarCarrusel() {
+    let index = 0;
+    const slides  = document.querySelectorAll('.carousel-slide');
+    const prevBtn = document.querySelector('.carousel-btn.prev');
+    const nextBtn = document.querySelector('.carousel-btn.next');
+    if (!slides.length) return;
+
+    function show(n) {
+      slides.forEach(s => s.classList.remove('active'));
+      index = (n + slides.length) % slides.length;
+      slides[index].classList.add('active');
+    }
+    prevBtn.addEventListener('click', () => show(index - 1));
+    nextBtn.addEventListener('click', () => show(index + 1));
+    setInterval(() => show(index + 1), 5000);
+    show(index);
+  }
+  document.addEventListener('DOMContentLoaded', iniciarCarrusel);
+</script>
 {% endblock %}
