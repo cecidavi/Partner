@@ -1,15 +1,139 @@
+<!-- templates/producto_detalle.html -->
 {% extends "base.html" %}
 
-{% block title %}Detalle de Producto - Parnet Ingeniería{% endblock %}
+{% block title %}Detalle de Producto – Parnet Ingeniería{% endblock %}
+
+{% block extra_css %}
+<style>
+.detalle-container {
+  max-width: 800px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+  font-family: 'Segoe UI', sans-serif;
+  color: #333;
+}
+
+.detalle-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+.detalle-header a {
+  text-decoration: none;
+  color: #1e3c72;
+  font-weight: 600;
+  background: rgba(30,60,114,0.1);
+  padding: 0.4rem 0.8rem;
+  border-radius: 4px;
+  transition: background-color 0.2s;
+}
+.detalle-header a:hover {
+  background: rgba(30,60,114,0.2);
+}
+
+.search-form {
+  margin-bottom: 1.5rem;
+  display: flex;
+  gap: 0.5rem;
+}
+.search-form input[type="text"] {
+  flex: 1;
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+.search-form button {
+  padding: 0.5rem 1rem;
+  background: #1e3c72;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.search-form button:hover {
+  background: #16305e;
+}
+
+.detalle-producto {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 2rem;
+  align-items: start;
+}
+
+.detalle-producto img {
+  width: 100%;
+  border-radius: 8px;
+  object-fit: cover;
+}
+
+.detalle-details h2 {
+  margin-top: 0;
+  color: #1e3c72;
+  font-size: 2rem;
+}
+
+.detalle-details p {
+  line-height: 1.6;
+  margin: 0.8rem 0;
+}
+
+.btn-primary {
+  display: inline-block;
+  background-color: #1e3c72;
+  color: #fff;
+  text-decoration: none;
+  padding: 0.6rem 1.2rem;
+  border-radius: 4px;
+  font-weight: 600;
+  transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.btn-primary:hover {
+  background-color: #16305e;
+  transform: translateY(-1px);
+}
+
+@media (max-width: 600px) {
+  .detalle-producto {
+    grid-template-columns: 1fr;
+  }
+}
+</style>
+{% endblock %}
 
 {% block content %}
-<div class="detalle-producto">
-  <h2>{{ producto.nombre }}</h2>
-  <p>{{ producto.descripcion }}</p>
-  <p><strong>Precio:</strong> ${{ '%.2f'|format(producto.precio) }}</p>
-  <p><strong>Estatus:</strong> {{ producto.estatus }}</p>
-  <a href="{{ url_for('public.export_producto_pdf', producto_id=producto.id) }}" class="btn btn-primary">
-    Descargar ficha PDF
-  </a>
+<div class="detalle-container">
+  <!-- Header: Back link + Search -->
+  <div class="detalle-header">
+    <a href="{{ url_for('public.productos') }}">← Volver al Catálogo</a>
+    <form class="search-form" method="GET" action="{{ url_for('public.productos') }}">
+      <input type="text" name="q" placeholder="Buscar producto..." value="{{ request.args.get('q', '') }}">
+      <button type="submit">Buscar</button>
+    </form>
+  </div>
+
+  <!-- Detalle de producto -->
+  <div class="detalle-producto">
+    {% if producto.imagen_url %}
+      <img src="{{ producto.imagen_url }}" alt="{{ producto.nombre }}">
+    {% else %}
+      <img src="{{ url_for('static', filename='img/no-image.png') }}" alt="Sin imagen">
+    {% endif %}
+    <div class="detalle-details">
+      <h2>{{ producto.nombre }}</h2>
+      <p>{{ producto.descripcion }}</p>
+      <p><strong>Precio:</strong> ${{ '%.2f'|format(producto.precio) }}</p>
+      <p><strong>Estatus:</strong> {{ producto.estatus }}</p>
+      <a href="{{ url_for('public.export_producto_pdf', producto_id=producto.id) }}" class="btn-primary">
+        Descargar ficha PDF
+      </a>
+    </div>
+  </div>
 </div>
 {% endblock %}
