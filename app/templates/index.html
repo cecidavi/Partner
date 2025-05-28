@@ -14,7 +14,6 @@
     margin-bottom: 10px;
     border-radius: 4px;
 }
-
 /* Carrusel */
 .carousel-container {
     position: relative;
@@ -40,7 +39,6 @@
     object-fit: cover;
     display: block;
 }
-
 /* Botones siguiente/anterior */
 .carousel-btn {
     position: absolute;
@@ -79,7 +77,6 @@
     color: #ffe600;
     margin-bottom: 8px;
 }
-
 /* Sección de software */
 .software-section {
     background: #083f75;
@@ -110,17 +107,19 @@
 
   <!-- Carrusel -->
   <div class="carousel-container">
-      <div class="carousel-slide active">
-          <img src="{{ url_for('static', filename='img/representacion_flash.png') }}" alt="Banner 1">
-      </div>
-      <div class="carousel-slide">
-          <img src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse2.mm.bing.net%2Fth%3Fid%3DOIP.NqOw_8RwEBdh1TVbUjznygHaEK%26pid%3DApi" alt="Banner 2">
-      </div>
-      <div class="carousel-slide">
-          <img src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse4.mm.bing.net%2Fth%3Fid%3DOIP.CrSIg1ng_FCihi4wdlSDawHaC-%26pid%3DApi" alt="Banner 3">
-      </div>
-      <button class="carousel-btn prev">❮</button>
-      <button class="carousel-btn next">❯</button>
+    <div class="carousel-slide active">
+      <img src="{{ url_for('static', filename='img/representacion_flash.png') }}" alt="Banner 1">
+    </div>
+    <div class="carousel-slide">
+      <img src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse2.mm.bing.net%2Fth%3Fid%3DOIP.NqOw_8RwEBdh1TVbUjznygHaEK%26pid%3DApi"
+           alt="Banner 2">
+    </div>
+    <div class="carousel-slide">
+      <img src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse4.mm.bing.net%2Fth%3Fid%3DOIP.CrSIg1ng_FCihi4wdlSDawHaC-%26pid%3DApi"
+           alt="Banner 3">
+    </div>
+    <button class="carousel-btn prev">❮</button>
+    <button class="carousel-btn next">❯</button>
   </div>
 
   <!-- Sección 1 -->
@@ -128,7 +127,16 @@
     <img src="{{ url_for('static', filename='img/Callcentre.png') }}" alt="Objetivo PARNET">
     <div class="section-content">
       <div class="section-title">¿Cuál es el objetivo principal de PARNET?</div>
-      <p>…tu texto…</p>
+      <p>
+        Nuestra empresa tiene como objetivo suministrar soluciones integrales en
+        telecomunicaciones (Voz y datos), eléctricas que resuelvan las necesidades
+        empresariales con productos, aplicaciones, servicios y consultoría de punta.
+      </p>
+      <p>
+        Buscamos mantener el trabajo al más alto nivel de excelencia y calidad,
+        brindando alta confiabilidad, incrementando los índices de productividad
+        y competitividad de su empresa y de su personal.
+      </p>
     </div>
   </div>
 
@@ -137,16 +145,33 @@
     <img src="{{ url_for('static', filename='img/Imax.png') }}" alt="Energía Eléctrica">
     <div class="section-content">
       <div class="section-title">¿Hay buena energía dentro de su empresa?</div>
-      <p>…tu texto…</p>
+      <p>
+        Normalmente, las personas ven en los virus a los principales enemigos
+        a combatir en sus PC. Sin embargo, el 94 % de los daños a equipos y
+        pérdida de datos están relacionados con problemas de energía eléctrica.
+      </p>
+      <p>
+        Picos, sobrevoltajes, interrupciones y distorsiones pueden provocar
+        daños costosos y pérdida de productividad.
+      </p>
     </div>
   </div>
 
   <!-- Sección de Software -->
   <div class="software-section">
-    <b>Con el afán …</b>
+    <b>Con el afán de brindarle soluciones integrales, Parnet Ingeniería le ofrece desarrollo de software tales como:</b>
     <div class="software-columns">
-      <ul>…</ul>
-      <ul>…</ul>
+      <ul>
+        <li>Aplicaciones a la Medida</li>
+        <li>Aplicaciones Cliente-Servidor</li>
+        <li>Software de Nómina</li>
+        <li>Bases de Datos</li>
+      </ul>
+      <ul>
+        <li>Aplicaciones Web</li>
+        <li>Aplicaciones Multimedia</li>
+        <li>Aplicaciones móviles para PDA’s</li>
+      </ul>
     </div>
   </div>
 {% endblock %}
