@@ -1,49 +1,110 @@
+{# templates/servicios.html #}
 {% extends "base.html" %}
 {% block title %}Servicios - PARNET Ingeniería{% endblock %}
 
 {% block extra_css %}
 <style>
-/* … tus estilos previos … */
+.servicios-section {
+    padding: 30px;
+    background: #d6ecfa;
+    border-radius: 8px;
+    box-shadow: 0 0 8px rgba(0,0,0,0.1);
+    color: #003366;
+    font-size: 14px;
+    line-height: 1.6;
+    margin-bottom: 30px;
+}
+.servicios-section h1 {
+    color: #1e3c72;
+    margin-bottom: 15px;
+}
+.servicios-section ul {
+    list-style: disc inside;
+    padding-left: 20px;
+}
 .solicitud-section {
-    margin-top: 40px;
     padding: 30px;
     background: #ffffff;
     border-radius: 8px;
     box-shadow: 0 0 8px rgba(0,0,0,0.1);
 }
-/* … */
+.solicitud-section h2 {
+    color: #1e3c72;
+    margin-bottom: 20px;
+}
+.solicitud-section .form-group {
+    margin-bottom: 18px;
+}
+.solicitud-section label {
+    font-weight: bold;
+    display: block;
+    margin-bottom: 6px;
+}
+.solicitud-section input,
+.solicitud-section textarea,
+.solicitud-section select {
+    width: 100%;
+    padding: 8px 10px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 14px;
+}
+.solicitud-section button {
+    background: #1e3c72;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background 0.3s;
+}
+.solicitud-section button:hover {
+    background: #16335e;
+}
 </style>
 {% endblock %}
 
 {% block content %}
-<div class="servicios-section">
-    <h1>Servicios</h1>
-    <p class="lead">…tu descripción…</p>
-    <!-- … contenido estático … -->
-</div>
+  <div class="servicios-section">
+    <h1>Servicios Disponibles</h1>
+    <ul>
+      {% for s in servicios_ofrecidos %}
+        <li><strong>{{ s.nombre }}</strong>: {{ s.descripcion or 'Sin descripción' }}</li>
+      {% endfor %}
+    </ul>
+  </div>
 
-<form method="POST" action="{{ url_for('public.servicios') }}">
-  {{ form.hidden_tag() }}
-  <div class="form-group">
-    {{ form.nombre.label }}<br>
-    {{ form.nombre() }}
-  </div>
-  <div class="form-group">
-    {{ form.correo.label }}<br>
-    {{ form.correo() }}
-  </div>
-  <div class="form-group">
-    {{ form.area.label }}<br>
-    {{ form.area() }}
-  </div>
-  <div class="form-group">
-    {{ form.detalle.label }}<br>
-    {{ form.detalle(rows=4) }}
-  </div>
-  <div class="form-group">
-    {{ form.recaptcha }}
-  </div>
-  <button type="submit">{{ form.submit.label.text }}</button>
-</form>
+  <section class="solicitud-section">
+    <h2>Solicitar un Servicio</h2>
+    <form method="POST" action="{{ url_for('public.servicios') }}">
+      {{ form.hidden_tag() }}
 
+      <div class="form-group">
+        <label for="{{ form.nombre.id }}">Nombre Completo</label>
+        {{ form.nombre(class_="", id=form.nombre.id, placeholder="Escribe tu nombre completo") }}
+      </div>
+
+      <div class="form-group">
+        <label for="{{ form.correo.id }}">Correo Electrónico</label>
+        {{ form.correo(class_="", id=form.correo.id, placeholder="tucorreo@ejemplo.com") }}
+      </div>
+
+      <div class="form-group">
+        <label for="{{ form.area.id }}">Selecciona el Servicio</label>
+        {{ form.area(class_="", id=form.area.id) }}
+      </div>
+
+      <div class="form-group">
+        <label for="{{ form.detalle.id }}">Detalles de la Solicitud</label>
+        {{ form.detalle(rows=4, class_="", id=form.detalle.id, placeholder="¿En qué podemos ayudarte? Describe aquí los detalles…") }}
+      </div>
+
+      <div class="form-group">
+        {{ form.recaptcha }}
+      </div>
+
+      <button type="submit">{{ form.submit.label.text }}</button>
+    </form>
+  </section>
 {% endblock %}
