@@ -24,7 +24,10 @@
       <!-- BOTÓN EXPORTAR EXCEL -->
       <div class="product-export-container">
         <a href="{{ url_for('admin.export_productos_excel') }}" class="btn-export">
-          Descargar Excel de Productos
+          📥 Descargar Excel de Productos
+        </a>
+        <a href="{{ url_for('admin.export_productos_pdf') }}" class="btn-export ml-2">
+          📄 Descargar PDF de Productos
         </a>
       </div>
 
