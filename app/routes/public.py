@@ -2,7 +2,9 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash
 from app.models.cliente import Cliente 
 from app.models.producto import Producto
-from app.models.contacto import Contacto      # <— importamos el modelo
+from app.forms.servicio_form import ServicioForm
+from app.models.solicitud_servicio import SolicitudServicio
+from app.models.contacto import Contacto  
 from app import db
 
 public_bp = Blueprint('public', __name__)
@@ -20,9 +22,21 @@ def clientes():
     lista_clientes = Cliente.query.all()
     return render_template('clientes.html', clientes=lista_clientes)
 
-@public_bp.route('/servicios')
+@public_bp.route('/servicios', methods=['GET','POST'])
 def servicios():
-    return render_template('servicios.html')
+    form = ServicioForm()
+    if form.validate_on_submit():
+        req = SolicitudServicio(
+            nombre_cliente = form.nombre.data,
+            correo_cliente = form.correo.data,
+            servicio_id    = None,              # o un mapeo si quieres FK
+            detalle        = form.detalle.data
+        )
+        db.session.add(req)
+        db.session.commit()
+        flash('¡Solicitud de servicio enviada!', 'success')
+        return redirect(url_for('public.servicios'))
+    return render_template('servicios.html', form=form)
 
 @public_bp.route('/producto')
 def productos():

@@ -24,6 +24,13 @@
             </div>
         </header>
 
+        <!-- Barra de bienvenida deslizante -->
+        <div class="welcome-bar">
+          <div class="marquee">
+            Bienvenido a PARNET Ingeniería S.A. de C.V. • Continuamente actualizamos el Sitio. Revisa nuestros estándares de calidad ISO 9000
+          </div>
+        </div>
+
         <!-- Navigation -->
         <nav class="nav-bar">
             <ul>
@@ -97,8 +104,8 @@
             <!-- Content Area -->
             <div class="content-area">
                 {% block content %}
-                <!-- contenido por defecto -->
-                <div style="color: white; text-align: center; padding: 50px;">
+                <!-- Contenido por defecto -->
+                <div class="welcome-content">
                     <h2>Bienvenido a PARNET Ingeniería S.A. de C.V.</h2>
                     <p>Continuamente actualizamos el Sitio. Revisa nuestros estándares de calidad ISO 9000</p>
                 </div>
@@ -125,7 +132,7 @@
         </footer>
     </div>
 
-    {# Aquí cargamos scripts específicos de cada página #}
+    <!-- Scripts específicos de cada página -->
     {% block extra_js %}{% endblock %}
 </body>
 </html>
