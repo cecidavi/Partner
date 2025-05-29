@@ -2,11 +2,11 @@ from flask import Blueprint, render_template, send_file
 from io import BytesIO
 from reportlab.lib.pagesizes import letter
 from reportlab.pdfgen import canvas
-import pandas as pd
+from reportlab.lib.utils import ImageReader
+import requests
 from models.producto import Producto
 
 public_bp = Blueprint('public', __name__)
-admin_bp = Blueprint('admin', __name__)
 
 @public_bp.route('/producto/<int:producto_id>')
 def producto_detalle(producto_id):
@@ -20,11 +20,11 @@ def export_producto_pdf(producto_id):
     p = canvas.Canvas(buffer, pagesize=letter)
     p.setTitle(f"Ficha_{prod.nombre}")
 
-    # Cabecera
+    # — Cabecera —
     p.setFont("Helvetica-Bold", 16)
     p.drawString(40, 750, f"Ficha Técnica de Producto: {prod.nombre}")
 
-    # Detalles del producto
+    # — Detalles del producto —
     p.setFont("Helvetica", 12)
     y = 720
     for line in [
@@ -37,6 +37,30 @@ def export_producto_pdf(producto_id):
         p.drawString(50, y, line)
         y -= 20
 
+    # — Imagen desde URL (si existe) —
+    if getattr(prod, 'imagen_url', None):
+        try:
+            # 1) Descarga la imagen
+            resp = requests.get(prod.imagen_url, timeout=5)
+            resp.raise_for_status()
+
+            # 2) Crea un ImageReader a partir de los bytes
+            img_reader = ImageReader(BytesIO(resp.content))
+
+            # 3) Calcula un tamaño razonable (ajusta a tu gusto)
+            max_width = 200
+            iw, ih = img_reader.getSize()
+            aspect = ih / float(iw)
+            img_width = max_width
+            img_height = max_width * aspect
+
+            # 4) Dibuja la imagen unos píxeles por debajo de los textos
+            p.drawImage(img_reader, 50, y - img_height - 10,
+                        width=img_width, height=img_height)
+        except Exception as e:
+            # Si algo falla con la URL, lo ignoramos
+            print(f"No se pudo cargar la imagen: {e}")
+
     p.showPage()
     p.save()
     buffer.seek(0)
@@ -46,28 +70,4 @@ def export_producto_pdf(producto_id):
         as_attachment=True,
         download_name=f"ficha_{prod.id}.pdf",
         mimetype='application/pdf'
-    )
-
-@admin_bp.route('/admin/productos/export_excel')
-def export_productos_excel():
-    productos = Producto.query.all()
-    data = [{
-        'ID': p.id,
-        'Nombre': p.nombre,
-        'Descripción': p.descripcion,
-        'Precio': float(p.precio),
-        'Estatus': p.estatus
-    } for p in productos]
-
-    df = pd.DataFrame(data)
-    output = BytesIO()
-    with pd.ExcelWriter(output, engine='openpyxl') as writer:
-        df.to_excel(writer, index=False, sheet_name='Productos')
-    output.seek(0)
-
-    return send_file(
-        output,
-        as_attachment=True,
-        download_name='productos_listado.xlsx',
-        mimetype='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
     )

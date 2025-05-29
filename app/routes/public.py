@@ -6,11 +6,14 @@ from flask import (
     session
 )
 from io import BytesIO
-from app import db 
+from app import db
 from datetime import datetime, timedelta
 from uuid import uuid4
 from reportlab.lib.pagesizes import letter
 from reportlab.pdfgen import canvas
+from reportlab.lib.utils import ImageReader
+import requests
+
 from app.models.cliente import Cliente
 from app.models.producto import Producto
 from app.models.noticia import Noticia
@@ -88,7 +91,7 @@ def servicios():
     if request.method == 'GET' and areas:
         form.area.data = areas[0].id
 
-    # 3) Según el área seleccionada (ya disponible en form.area.data), busco los servicios
+    # 3) Según el área seleccionada, obtengo los servicios
     servicios_ofrecidos = Servicio.query \
         .filter_by(area_id=form.area.data) \
         .order_by(Servicio.nombre) \
@@ -110,12 +113,12 @@ def servicios():
         flash('¡Solicitud de servicio enviada!', 'success')
         return redirect(url_for('public.servicios'))
 
-    # Finalmente, renderizo con ambos listados correctos
     return render_template(
         'servicios.html',
         form=form,
         servicios_ofrecidos=servicios_ofrecidos
     )
+
 @public_bp.route('/contactos', methods=['GET', 'POST'])
 def contactos():
     if request.method == 'POST':
@@ -149,8 +152,12 @@ def export_producto_pdf(producto_id):
     buffer = BytesIO()
     p = canvas.Canvas(buffer, pagesize=letter)
     p.setTitle(f"Ficha_{prod.nombre}")
+
+    # Cabecera
     p.setFont("Helvetica-Bold", 16)
     p.drawString(40, 750, f"Ficha Técnica de Producto: {prod.nombre}")
+
+    # Detalles
     p.setFont("Helvetica", 12)
     y = 720
     for line in [
@@ -162,9 +169,27 @@ def export_producto_pdf(producto_id):
     ]:
         p.drawString(50, y, line)
         y -= 20
+
+    # Imagen remota (si existe URL)
+    if prod.imagen_url:
+        try:
+            resp = requests.get(prod.imagen_url, timeout=5)
+            resp.raise_for_status()
+            img = ImageReader(BytesIO(resp.content))
+            iw, ih = img.getSize()
+
+            # Queremos que el ancho máximo sea 200px
+            max_w = 200
+            h = max_w * (ih/iw)
+            p.drawImage(img, 50, y - h - 10, width=max_w, height=h)
+        except Exception as e:
+            # si hay error bajando la imagen, lo mostramos en consola
+            print(f"[ERROR imagen URL] {prod.imagen_url}: {e}")
+
     p.showPage()
     p.save()
     buffer.seek(0)
+
     return send_file(
         buffer,
         as_attachment=True,
