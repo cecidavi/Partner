@@ -43,10 +43,10 @@
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script>
     // Datos inyectados desde Flask
-    const serviceLabels = {{ service_stats|map(attribute=0)|list|tojson }};
-    const serviceData   = {{ service_stats|map(attribute=1)|list|tojson }};
-    const productLabels = {{ product_stats|map(attribute=0)|list|tojson }};
-    const productData   = {{ product_stats|map(attribute=1)|list|tojson }};
+    const serviceLabels = {{ service_stats|map(attribute=0)|list|tojson | safe }};
+    const serviceData   = {{ service_stats|map(attribute=1)|list|tojson | safe }};
+    const productLabels = {{ product_stats|map(attribute=0)|list|tojson | safe }};
+    const productData   = {{ product_stats|map(attribute=1)|list|tojson | safe }};
 
     // Gráfico de barras: solicitudes por área
     new Chart(document.getElementById('servicesChart'), {
