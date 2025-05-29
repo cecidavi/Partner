@@ -12,15 +12,27 @@
     <!-- Header -->
     <header class="header">
       <div class="header-content">
+
+        <!-- Logo a la izquierda -->
         <div class="logo-section">
-          <div class="globe"></div>
-          <div class="parnet-logo">PARNET</div>
+          <img src="{{ url_for('static', filename='img/logotipo.png') }}"
+               alt="Logo PARNET"
+               class="logo-img">
         </div>
+
+        <!-- Información central -->
         <div class="company-info">
           <h1>PARNET INGENIERÍA S.A DE C.V.</h1>
           <div class="tagline">Telecomunicaciones, Voz, Datos, Fibra Óptica.</div>
         </div>
-        <div class="antenna"></div>
+
+        <!-- Imagen antena a la derecha -->
+        <div class="antenna">
+          <img src="{{ url_for('static', filename='img/antenas.png') }}"
+               alt="Antenas PARNET"
+               class="antenna-img">
+        </div>
+
       </div>
     </header>
 
@@ -67,22 +79,21 @@
 
         <!-- Áreas PARNET -->
         <div class="areas-section">
-        <div class="areas-header">Áreas PARNET</div>
-        <div class="areas-buttons">
-          <a href="{{ url_for('areas_p.certificaciones') }}" class="area-button">Certificaciones</a>
-          <a href="{{ url_for('areas_p.telecomunicaciones') }}" class="area-button">Telecomunicaciones</a>
-          <a href="{{ url_for('areas_p.redes_electricas') }}" class="area-button">Redes Eléctricas</a>
-          <a href="{{ url_for('areas_p.circuito_cerrado_tv') }}" class="area-button">Circuito Cerrado TV</a>
-          <a href="{{ url_for('areas_p.corriente_regulada') }}" class="area-button">Corriente Regulada</a>
-          <a href="{{ url_for('areas_p.data_centers') }}" class="area-button">Data Centers</a>
-          <a href="{{ url_for('areas_p.fibra_optica') }}" class="area-button">Fibra Óptica</a>
-          <a href="{{ url_for('areas_p.cables_estructurados') }}" class="area-button">Cables Estructurados</a>
-          <a href="{{ url_for('areas_p.polizas') }}" class="area-button">Pólizas</a>
-          <a href="{{ url_for('areas_p.sugerencias') }}" class="area-button">Sugerencias</a>
-          <a href="{{ url_for('auth.login') }}" class="area-button">Administración</a>
+          <div class="areas-header">Áreas PARNET</div>
+          <div class="areas-buttons">
+            <a href="{{ url_for('areas_p.certificaciones') }}" class="area-button">Certificaciones</a>
+            <a href="{{ url_for('areas_p.telecomunicaciones') }}" class="area-button">Telecomunicaciones</a>
+            <a href="{{ url_for('areas_p.redes_electricas') }}" class="area-button">Redes Eléctricas</a>
+            <a href="{{ url_for('areas_p.circuito_cerrado_tv') }}" class="area-button">Circuito Cerrado TV</a>
+            <a href="{{ url_for('areas_p.corriente_regulada') }}" class="area-button">Corriente Regulada</a>
+            <a href="{{ url_for('areas_p.data_centers') }}" class="area-button">Data Centers</a>
+            <a href="{{ url_for('areas_p.fibra_optica') }}" class="area-button">Fibra Óptica</a>
+            <a href="{{ url_for('areas_p.cables_estructurados') }}" class="area-button">Cables Estructurados</a>
+            <a href="{{ url_for('areas_p.polizas') }}" class="area-button">Pólizas</a>
+            <a href="{{ url_for('areas_p.sugerencias') }}" class="area-button">Sugerencias</a>
+            <a href="{{ url_for('auth.login') }}" class="area-button">Administración</a>
+          </div>
         </div>
-        </div>
-
 
         <!-- Marcas y Proveedores -->
         <div class="brands-section">
@@ -104,6 +115,7 @@
             <div>👥 Visitas: <span class="counter-display">{{ visits_count }}</span></div>
           </div>
         </div>
+
       </aside>
 
       <!-- Content Area -->
@@ -130,8 +142,7 @@
         <a href="{{ url_for('public.socios') }}">Socios</a>
       </div>
       <div class="copyright">
-        Copyright © 2012<br>
-        <div class="parnet-logo">PARNET</div>
+        Copyright © 2012
       </div>
     </footer>
   </div>
