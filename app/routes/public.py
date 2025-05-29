@@ -9,7 +9,8 @@ from app.models.producto import Producto
 from app.forms.servicio_form import ServicioForm
 from app.models.solicitud_servicio import SolicitudServicio
 from app.models.servicio import Servicio
-from app.models.contacto import Contacto  
+from app.models.contacto import Contacto
+from app.models.noticia import Noticia  
 from app import db
 
 public_bp = Blueprint('public', __name__)
@@ -109,3 +110,9 @@ def casos_exito():
 @public_bp.route('/socios')
 def socios():
     return render_template('socios.html')
+
+@public_bp.context_processor
+def inject_noticias():
+    # Recupera las 5 noticias más recientes
+    noticias = Noticia.query.order_by(Noticia.fecha.desc()).limit(5).all()
+    return dict(noticias=noticias)

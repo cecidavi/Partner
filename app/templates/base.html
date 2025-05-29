@@ -49,17 +49,21 @@
         <main class="main-content">
             <!-- Sidebar -->
             <aside class="sidebar">
-                <!-- Noticias -->
-                <div class="news-section">
-                    <div class="news-header">📰 Noticias 📰</div>
-                    <div class="news-content">
-                        <p><strong>Alianzas en telecomunicaciones generará competencia:</strong><br>
-                        Standard & Poor's. <a href="#" style="color: #ffff00;">[Leer más...]</a></p>
-                        <p style="margin-top: 15px;"><strong>La TV satelital cumple 50 años.</strong><br>
-                        <a href="#" style="color: #ffff00;">[Leer más...]</a></p>
-                        <p style="margin-top: 15px;"><a href="#" style="color: #ffff00;">Control Panel PARNET</a></p>
-                    </div>
-                </div>
+<!-- Noticias Dinámicas -->
+                        <div class="news-section">
+  <div class="news-header">📰 Noticias 📰</div>
+  <div class="news-content">
+    {% for noticia in noticias %}
+      <p>
+        <strong>{{ noticia.titulo }}</strong><br>
+        {{ noticia.nota }}<br>
+        <small>{{ noticia.fecha.strftime('%Y-%m-%d') }}</small>
+      </p>
+    {% else %}
+      <p>No hay noticias disponibles.</p>
+    {% endfor %}
+  </div>
+                        </div>
 
                 <!-- Áreas -->
                 <div class="areas-section">
