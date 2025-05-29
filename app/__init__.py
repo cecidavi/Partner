@@ -15,9 +15,11 @@ def create_app():
     from app.routes.admin import admin_bp
     from app.routes.auth import auth_bp
     from app.routes.areas_p import areas_p_bp
+    from app.routes.api import api_bp
     app.register_blueprint(public_bp)
     app.register_blueprint(admin_bp, url_prefix="/admin")
     app.register_blueprint(auth_bp)
     app.register_blueprint(areas_p_bp)
+    app.register_blueprint(api_bp)
 
     return app
