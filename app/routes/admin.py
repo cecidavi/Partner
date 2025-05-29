@@ -19,7 +19,8 @@ from app import db
 
 import io
 import pandas as pd
-from reportlab.platypus import SimpleDocTemplate, Table, TableStyle
+import requests
+from reportlab.platypus import SimpleDocTemplate, Table, TableStyle, Image as RLImage
 from reportlab.lib.pagesizes import letter
 from reportlab.lib import colors
 
@@ -123,29 +124,56 @@ def export_productos_excel():
     )
 
 
-# — Exportar Productos a PDF —
+# — Exportar Productos a PDF (con miniaturas) —
 @admin_bp.route('/productos/export_pdf')
 @login_required
 def export_productos_pdf():
     productos = Producto.query.order_by(Producto.id).all()
-    data = [['ID', 'Nombre', 'Descripción', 'Precio', 'Estatus']]
+
+    # Preparamos los datos con encabezado de columnas
+    data = [['Imagen', 'ID', 'Nombre', 'Descripción', 'Precio', 'Estatus']]
+
     for p in productos:
-        data.append([p.id, p.nombre, p.descripcion, f"${p.precio:.2f}", p.estatus])
+        # Intentamos descargar la imagen desde la URL
+        img_flowable = ''
+        if p.imagen_url:
+            try:
+                resp = requests.get(p.imagen_url, timeout=5)
+                resp.raise_for_status()
+                buf = io.BytesIO(resp.content)
+                # Creamos el flowable, escalando a 50×50px
+                img_flowable = RLImage(buf, width=50, height=50)
+            except Exception:
+                img_flowable = ''
+
+        data.append([
+            img_flowable,
+            p.id,
+            p.nombre,
+            p.descripcion,
+            f"${p.precio:.2f}",
+            p.estatus
+        ])
+
+    # Generamos el PDF
     buffer = io.BytesIO()
     doc = SimpleDocTemplate(buffer, pagesize=letter)
-    table = Table(data, repeatRows=1)
+    # Ajustamos anchos de columna para que quepa todo
+    table = Table(data, colWidths=[60, 30, 100, 180, 60, 60], repeatRows=1)
     table.setStyle(TableStyle([
         ('BACKGROUND', (0,0), (-1,0), colors.HexColor('#1e3c72')),
         ('TEXTCOLOR',  (0,0), (-1,0), colors.white),
         ('GRID',       (0,0), (-1,-1), 0.5, colors.grey),
-        ('FONTNAME',   (0,0), (-1,0), 'Helvetica-Bold'),
-        ('ALIGN',      (0,0), (-1,-1), 'CENTER'),
+        ('VALIGN',     (0,0), (-1,-1), 'MIDDLE'),
+        ('ALIGN',      (1,0), (-1,-1), 'CENTER'),
     ]))
+
     doc.build([table])
     buffer.seek(0)
+
     return send_file(
         buffer,
-        download_name='productos_listado.pdf',
+        download_name='productos_listado_con_imagenes.pdf',
         as_attachment=True,
         mimetype='application/pdf'
     )
@@ -209,6 +237,7 @@ def exportar_sugerencias_pdf():
         as_attachment=True,
         mimetype='application/pdf'
     )
+
 
 @admin_bp.route('/dashboard')
 @login_required
