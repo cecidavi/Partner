@@ -1,19 +1,58 @@
 # app/routes/public.py
 
-from flask import Blueprint, render_template, request, redirect, url_for, flash, send_file
+from flask import (
+    Blueprint, render_template, request, redirect,
+    url_for, flash, send_file, session
+)
 from io import BytesIO
+from datetime import datetime, timedelta
 from reportlab.lib.pagesizes import letter
 from reportlab.pdfgen import canvas
-from app.models.cliente import Cliente 
+from app import db
+from app.models.cliente import Cliente
 from app.models.producto import Producto
+from app.models.visita import Visita
+from app.models.noticia import Noticia
 from app.forms.servicio_form import ServicioForm
 from app.models.solicitud_servicio import SolicitudServicio
 from app.models.servicio import Servicio
 from app.models.contacto import Contacto
-from app.models.noticia import Noticia  
-from app import db
 
 public_bp = Blueprint('public', __name__)
+
+# — Registrar cada nueva sesión como visita —
+@public_bp.before_app_request
+def track_visita():
+    if not session.get('visitada'):
+        ip = request.remote_addr or '0.0.0.0'
+        nueva = Visita(ip_usuario=ip, fecha=datetime.utcnow())
+        db.session.add(nueva)
+        db.session.commit()
+        session['visitada'] = True
+
+# — Inyectar noticias y estadísticas en todas las plantillas —
+@public_bp.context_processor
+def inject_globals():
+    # Últimas 5 noticias
+    noticias = Noticia.query.order_by(Noticia.fecha.desc()).limit(5).all()
+
+    # Total de visitas (número de registros en la tabla)
+    visits_count = Visita.query.count()
+
+    # Usuarios “activos”: IPs distintas en los últimos 5 minutos
+    cutoff = datetime.utcnow() - timedelta(minutes=5)
+    active_users_count = (
+        db.session.query(Visita.ip_usuario)
+                  .filter(Visita.fecha >= cutoff)
+                  .distinct()
+                  .count()
+    )
+
+    return dict(
+        noticias=noticias,
+        visits_count=visits_count,
+        active_users_count=active_users_count
+    )
 
 @public_bp.route('/')
 def index():
@@ -44,7 +83,11 @@ def servicios():
         db.session.commit()
         flash('¡Solicitud de servicio enviada!', 'success')
         return redirect(url_for('public.servicios'))
-    return render_template('servicios.html', servicios_ofrecidos=servicios_ofrecidos, form=form)
+    return render_template(
+        'servicios.html',
+        servicios_ofrecidos=servicios_ofrecidos,
+        form=form
+    )
 
 @public_bp.route('/contactos', methods=['GET', 'POST'])
 def contactos():
@@ -64,7 +107,9 @@ def contactos():
 def productos():
     q = request.args.get('q', '')
     if q:
-        productos = Producto.query.filter(Producto.nombre.ilike(f'%{q}%')).all()
+        productos = Producto.query.filter(
+            Producto.nombre.ilike(f'%{q}%')
+        ).all()
     else:
         productos = Producto.query.all()
     return render_template('producto.html', productos=productos)
@@ -110,9 +155,3 @@ def casos_exito():
 @public_bp.route('/socios')
 def socios():
     return render_template('socios.html')
-
-@public_bp.context_processor
-def inject_noticias():
-    # Recupera las 5 noticias más recientes
-    noticias = Noticia.query.order_by(Noticia.fecha.desc()).limit(5).all()
-    return dict(noticias=noticias)

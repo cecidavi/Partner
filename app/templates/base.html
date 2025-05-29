@@ -1,142 +1,140 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}PARNET Ingeniería S.A de C.V.{% endblock %}</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/base.css') }}">
-    {% block extra_css %}{% endblock %}
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}PARNET Ingeniería S.A de C.V.{% endblock %}</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/base.css') }}">
+  {% block extra_css %}{% endblock %}
 </head>
 <body>
-    <div class="container">
-        <!-- Header -->
-        <header class="header">
-            <div class="header-content">
-                <div class="logo-section">
-                    <div class="globe"></div>
-                    <div class="parnet-logo">PARNET</div>
-                </div>
-                <div class="company-info">
-                    <h1>PARNET INGENIERÍA S.A DE C.V.</h1>
-                    <div class="tagline">Telecomunicaciones, Voz, Datos, Fibra Óptica.</div>
-                </div>
-                <div class="antenna"></div>
-            </div>
-        </header>
+  <div class="container">
+    <!-- Header -->
+    <header class="header">
+      <div class="header-content">
+        <div class="logo-section">
+          <div class="globe"></div>
+          <div class="parnet-logo">PARNET</div>
+        </div>
+        <div class="company-info">
+          <h1>PARNET INGENIERÍA S.A DE C.V.</h1>
+          <div class="tagline">Telecomunicaciones, Voz, Datos, Fibra Óptica.</div>
+        </div>
+        <div class="antenna"></div>
+      </div>
+    </header>
 
-        <!-- Barra de bienvenida deslizante -->
-        <div class="welcome-bar">
-          <div class="marquee">
-            Bienvenido a PARNET Ingeniería S.A. de C.V. • Continuamente actualizamos el Sitio. Revisa nuestros estándares de calidad ISO 9000
+    <!-- Barra de bienvenida deslizante -->
+    <div class="welcome-bar">
+      <div class="marquee">
+        Bienvenido a PARNET Ingeniería S.A. de C.V. • Continuamente actualizamos el Sitio. Revisa nuestros estándares de calidad ISO 9000
+      </div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="nav-bar">
+      <ul>
+        <li><a href="{{ url_for('public.index') }}">Página Principal</a></li>
+        <li><a href="{{ url_for('public.quienes_somos') }}">¿Quienes Somos?</a></li>
+        <li><a href="{{ url_for('public.clientes') }}">Clientes</a></li>
+        <li><a href="{{ url_for('public.servicios') }}">Servicios</a></li>
+        <li><a href="{{ url_for('public.productos') }}">Productos</a></li>
+        <li><a href="{{ url_for('public.casos_exito') }}">Casos De Éxito</a></li>
+        <li><a href="{{ url_for('public.contactos') }}">Contactos</a></li>
+        <li><a href="{{ url_for('public.socios') }}">Socios</a></li>
+      </ul>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+      <!-- Sidebar -->
+      <aside class="sidebar">
+        <!-- Noticias Dinámicas -->
+        <div class="news-section">
+          <div class="news-header">📰 Noticias 📰</div>
+          <div class="news-content">
+            {% for noticia in noticias %}
+              <p>
+                <strong>{{ noticia.titulo }}</strong><br>
+                {{ noticia.nota }}<br>
+                <small>{{ noticia.fecha.strftime('%Y-%m-%d') }}</small>
+              </p>
+            {% else %}
+              <p>No hay noticias disponibles.</p>
+            {% endfor %}
           </div>
         </div>
 
-        <!-- Navigation -->
-        <nav class="nav-bar">
-            <ul>
-                <li><a href="{{ url_for('public.index') }}">Página Principal</a></li>
-                <li><a href="{{ url_for('public.quienes_somos') }}">¿Quienes Somos?</a></li>
-                <li><a href="{{ url_for('public.clientes') }}">Clientes</a></li>
-                <li><a href="{{ url_for('public.servicios') }}">Servicios</a></li>
-                <li><a href="{{ url_for('public.productos') }}">Productos</a></li>
-                <li><a href="{{ url_for('public.casos_exito') }}">Casos De Éxito</a></li>
-                <li><a href="{{ url_for('public.contactos') }}">Contactos</a></li>
-                <li><a href="{{ url_for('public.socios') }}">Socios</a></li>
-            </ul>
-        </nav>
+        <!-- Áreas PARNET -->
+        <div class="areas-section">
+          <div class="areas-header">Áreas PARNET</div>
+          <div class="areas-buttons">
+            <a href="#" class="area-button">Certificaciones</a>
+            <a href="#" class="area-button">Telecomunicaciones</a>
+            <a href="#" class="area-button">Redes Eléctricas</a>
+            <a href="#" class="area-button">Circuito Cerrado TV</a>
+            <a href="#" class="area-button">Corriente Regulada</a>
+            <a href="#" class="area-button">Data Centers</a>
+            <a href="#" class="area-button">Fibra Óptica</a>
+            <a href="#" class="area-button">Cables Estructurados</a>
+            <a href="#" class="area-button">Pólizas</a>
+            <a href="{{ url_for('areas_p.sugerencias') }}" class="area-button">Sugerencias</a>
+            <a href="{{ url_for('auth.login') }}" class="area-button">Administración</a>
+          </div>
+        </div>
 
-        <!-- Main Content -->
-        <main class="main-content">
-            <!-- Sidebar -->
-            <aside class="sidebar">
-<!-- Noticias Dinámicas -->
-                        <div class="news-section">
-  <div class="news-header">📰 Noticias 📰</div>
-  <div class="news-content">
-    {% for noticia in noticias %}
-      <p>
-        <strong>{{ noticia.titulo }}</strong><br>
-        {{ noticia.nota }}<br>
-        <small>{{ noticia.fecha.strftime('%Y-%m-%d') }}</small>
-      </p>
-    {% else %}
-      <p>No hay noticias disponibles.</p>
-    {% endfor %}
+        <!-- Marcas y Proveedores -->
+        <div class="brands-section">
+          <div class="brands-header">Marcas y Proveedores</div>
+          <div class="brand-info">
+            <span class="brand-name">PANDUIT®</span> es líder mundial en diseño y fabricación de productos para telecomunicaciones.<br>
+            <a href="#" class="brand-link">[Leer más...]</a>
+          </div>
+          <div class="brand-info">
+            <span class="brand-name">Cisco Systems</span> es líder mundial en redes para Internet.<br>
+            <a href="#" class="brand-link">[Leer más...]</a>
+          </div>
+        </div>
+
+        <!-- Estadísticas dinámicas -->
+        <div class="stats-section">
+          <div class="counter">
+            <div>🏆 Conectados: {{ active_users_count }}</div>
+            <div>👥 Visitas: <span class="counter-display">{{ visits_count }}</span></div>
+          </div>
+        </div>
+      </aside>
+
+      <!-- Content Area -->
+      <div class="content-area">
+        {% block content %}
+          <div class="welcome-content">
+            <h2>Bienvenido a PARNET Ingeniería S.A. de C.V.</h2>
+            <p>Continuamente actualizamos el Sitio. Revisa nuestros estándares de calidad ISO 9000</p>
+          </div>
+        {% endblock %}
+      </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="footer-links">
+        <a href="{{ url_for('public.index') }}">Página Principal</a> |
+        <a href="{{ url_for('public.quienes_somos') }}">¿Quienes Somos?</a> |
+        <a href="{{ url_for('public.clientes') }}">Clientes</a> |
+        <a href="{{ url_for('public.servicios') }}">Servicios</a> |
+        <a href="{{ url_for('public.productos') }}">Productos</a> |
+        <a href="{{ url_for('public.casos_exito') }}">Casos De Éxito</a> |
+        <a href="{{ url_for('public.contactos') }}">Contacto</a> |
+        <a href="{{ url_for('public.socios') }}">Socios</a>
+      </div>
+      <div class="copyright">
+        Copyright © 2012<br>
+        <div class="parnet-logo">PARNET</div>
+      </div>
+    </footer>
   </div>
-                        </div>
 
-                <!-- Áreas -->
-                <div class="areas-section">
-                    <div class="areas-header">Áreas PARNET</div>
-                    <div class="areas-buttons">
-                        <a href="#" class="area-button">Certificaciones</a>
-                        <a href="#" class="area-button">Telecomunicaciones</a>
-                        <a href="#" class="area-button">Redes Eléctricas</a>
-                        <a href="#" class="area-button">Circuito Cerrado TV</a>
-                        <a href="#" class="area-button">Corriente Regulada</a>
-                        <a href="#" class="area-button">Data Centers</a>
-                        <a href="#" class="area-button">Fibra Óptica</a>
-                        <a href="#" class="area-button">Cables Estructurados</a>
-                        <a href="#" class="area-button">Pólizas</a>
-                        <a href="{{ url_for('areas_p.sugerencias') }}" class="area-button">Sugerencias</a>
-                        <a href="{{ url_for('auth.login') }}" class="area-button">Administración</a>
-                    </div>
-                </div>
-
-                <!-- Marcas -->
-                <div class="brands-section">
-                    <div class="brands-header">Marcas y Proveedores</div>
-                    <div class="brand-info">
-                        <span class="brand-name">PANDUIT®</span> es líder mundial en diseño y fabricación de productos para telecomunicaciones.<br>
-                        <a href="#" style="color: #ffff00;">[Leer más...]</a>
-                    </div>
-                    <div class="brand-info">
-                        <span class="brand-name">Cisco Systems</span> es líder mundial en redes para Internet.<br>
-                        <a href="#" style="color: #ffff00;">[Leer más...]</a>
-                    </div>
-                </div>
-
-                <!-- Estadísticas -->
-                <div class="stats-section">
-                    <div class="counter">
-                        <div>🏆 Conectados: 674</div>
-                        <div>👥 Visitas: <span class="counter-display">07899</span></div>
-                    </div>
-                </div>
-            </aside>
-
-            <!-- Content Area -->
-            <div class="content-area">
-                {% block content %}
-                <!-- Contenido por defecto -->
-                <div class="welcome-content">
-                    <h2>Bienvenido a PARNET Ingeniería S.A. de C.V.</h2>
-                    <p>Continuamente actualizamos el Sitio. Revisa nuestros estándares de calidad ISO 9000</p>
-                </div>
-                {% endblock %}
-            </div>
-        </main>
-
-        <!-- Footer -->
-        <footer class="footer">
-            <div class="footer-links">
-                <a href="{{ url_for('public.index') }}">Página Principal</a> |
-                <a href="{{ url_for('public.quienes_somos') }}">¿Quienes Somos?</a> |
-                <a href="{{ url_for('public.clientes') }}">Clientes</a> |
-                <a href="{{ url_for('public.servicios') }}">Servicios</a> |
-                <a href="{{ url_for('public.productos') }}">Productos</a> |
-                <a href="{{ url_for('public.casos_exito') }}">Casos De Éxito</a> |
-                <a href="{{ url_for('public.contactos') }}">Contacto</a> |
-                <a href="{{ url_for('public.socios') }}">Socios</a>
-            </div>
-            <div class="copyright">
-                Copyright © 2012<br>
-                <div class="parnet-logo" style="font-size: 18px; margin-top: 5px;">PARNET</div>
-            </div>
-        </footer>
-    </div>
-
-    <!-- Scripts específicos de cada página -->
-    {% block extra_js %}{% endblock %}
+  {% block extra_js %}{% endblock %}
 </body>
 </html>
