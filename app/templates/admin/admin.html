@@ -17,7 +17,6 @@
     </header>
 
     <main class="admin-main">
-      {# Este es el bloque que podrán rellenar las plantillas hijas #}
       {% block admin_content %}
       <section class="admin-welcome">
         <h2>Bienvenido, administrador</h2>
@@ -28,6 +27,10 @@
         <a href="{{ url_for('admin.crear_usuario') }}" class="action-card">➕ Crear Usuario</a>
         <a href="{{ url_for('admin.productos_admin') }}" class="action-card">📦 Productos</a>
         <a href="{{ url_for('admin.lista_sugerencias') }}" class="action-card">💡 Sugerencias</a>
+        <!-- Nuevo botón para el dashboard de gráficos -->
+        <a href="{{ url_for('admin.dashboard') }}" class="action-card">
+          📊 Dashboard
+        </a>
       </section>
       {% endblock %}
     </main>

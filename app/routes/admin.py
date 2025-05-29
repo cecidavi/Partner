@@ -7,6 +7,10 @@ from flask import (
 from app.forms.register_form import RegisterForm
 from app.forms.producto_form import ProductoForm
 from app.models.usuario import Usuario
+from sqlalchemy import func
+from app.models.solicitud_servicio import SolicitudServicio
+from app.models.area import Area
+from app.models.servicio import Servicio
 from app.models.producto import Producto
 from app.models.sugerencia import Sugerencia
 from werkzeug.security import generate_password_hash
@@ -204,4 +208,27 @@ def exportar_sugerencias_pdf():
         download_name='sugerencias.pdf',
         as_attachment=True,
         mimetype='application/pdf'
+    )
+
+@admin_bp.route('/dashboard')
+@login_required
+def dashboard():
+    # Conteo de solicitudes por área
+    service_stats = (
+        db.session.query(Area.nombre, func.count(SolicitudServicio.id))
+                  .join(Servicio, Servicio.area_id == Area.id)
+                  .join(SolicitudServicio, SolicitudServicio.servicio_id == Servicio.id)
+                  .group_by(Area.nombre)
+                  .all()
+    )
+    # Conteo de productos por estatus
+    product_stats = (
+        db.session.query(Producto.estatus, func.count(Producto.id))
+                  .group_by(Producto.estatus)
+                  .all()
+    )
+    return render_template(
+        'admin/dashboard.html',
+        service_stats=service_stats,
+        product_stats=product_stats
     )

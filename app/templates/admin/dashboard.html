@@ -1,0 +1,85 @@
+<!-- templates/admin/dashboard.html -->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Dashboard – Admin PARNET</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/admin.css') }}">
+</head>
+<body>
+  <div class="admin-container">
+    <!-- Header -->
+    <header class="admin-header">
+      <h1>Dashboard de Métricas</h1>
+      <nav>
+        <a href="{{ url_for('admin.admin_home') }}">⬅ Volver al panel</a>
+        <a href="{{ url_for('auth.logout') }}">🔒 Cerrar Sesión</a>
+      </nav>
+    </header>
+
+    <!-- Main -->
+    <main class="admin-main">
+      <section>
+        <p>En este panel encontrarás un resumen de solicitudes por área y del catálogo de productos.</p>
+      </section>
+
+      <section>
+        <div class="charts-wrapper" style="display:flex;flex-wrap:wrap;gap:2rem;">
+          <div class="chart-card" style="flex:1;min-width:300px;">
+            <h2>Solicitudes por Área</h2>
+            <canvas id="servicesChart"></canvas>
+          </div>
+          <div class="chart-card" style="flex:1;min-width:300px;">
+            <h2>Productos por Estatus</h2>
+            <canvas id="productsChart"></canvas>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <!-- Chart.js desde CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script>
+    // Datos inyectados desde Flask
+    const serviceLabels = {{ service_stats|map(attribute=0)|list|tojson }};
+    const serviceData   = {{ service_stats|map(attribute=1)|list|tojson }};
+    const productLabels = {{ product_stats|map(attribute=0)|list|tojson }};
+    const productData   = {{ product_stats|map(attribute=1)|list|tojson }};
+
+    // Gráfico de barras: solicitudes por área
+    new Chart(document.getElementById('servicesChart'), {
+      type: 'bar',
+      data: {
+        labels: serviceLabels,
+        datasets: [{
+          label: 'N.º de Solicitudes',
+          data: serviceData,
+          borderWidth: 1
+        }]
+      },
+      options: {
+        responsive: true,
+        scales: {
+          y: { beginAtZero: true }
+        }
+      }
+    });
+
+    // Gráfico de pastel: productos por estatus
+    new Chart(document.getElementById('productsChart'), {
+      type: 'pie',
+      data: {
+        labels: productLabels,
+        datasets: [{
+          label: 'Productos',
+          data: productData,
+          borderWidth: 1
+        }]
+      },
+      options: { responsive: true }
+    });
+  </script>
+</body>
+</html>
