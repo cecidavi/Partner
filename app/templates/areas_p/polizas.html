@@ -1,15 +1,19 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-  <meta charset="UTF-8">
-  <title>Pólizas – PARNET Ingeniería</title>
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/base.css') }}">
-</head>
-<body>
-  <div class="section">
-    <h2>Pólizas</h2>
-    <p>Ofrecemos pólizas de mantenimiento y soporte técnico para tu infraestructura.</p>
-    <p>Planes personalizados según tus necesidades y presupuesto.</p>
-  </div>
-</body>
-</html>
+{# templates/areas_p/polizas.html #}
+{% extends "base.html" %}
+
+{% block title %}Pólizas – PARNET Ingeniería{% endblock %}
+
+{% block extra_css %}
+<style>
+.section { padding: 30px; background: #adcce5; border-radius: 8px; }
+.section h2 { color: #1e3c72; }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="section">
+  <h2>Pólizas</h2>
+  <p>Ofrecemos pólizas de mantenimiento y soporte técnico para tu infraestructura.</p>
+  <p>Planes personalizados según tus necesidades y presupuesto.</p>
+</div>
+{% endblock %}

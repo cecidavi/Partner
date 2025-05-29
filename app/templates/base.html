@@ -67,21 +67,22 @@
 
         <!-- Áreas PARNET -->
         <div class="areas-section">
-          <div class="areas-header">Áreas PARNET</div>
-          <div class="areas-buttons">
-            <a href="#" class="area-button">Certificaciones</a>
-            <a href="#" class="area-button">Telecomunicaciones</a>
-            <a href="#" class="area-button">Redes Eléctricas</a>
-            <a href="#" class="area-button">Circuito Cerrado TV</a>
-            <a href="#" class="area-button">Corriente Regulada</a>
-            <a href="#" class="area-button">Data Centers</a>
-            <a href="#" class="area-button">Fibra Óptica</a>
-            <a href="#" class="area-button">Cables Estructurados</a>
-            <a href="#" class="area-button">Pólizas</a>
-            <a href="{{ url_for('areas_p.sugerencias') }}" class="area-button">Sugerencias</a>
-            <a href="{{ url_for('auth.login') }}" class="area-button">Administración</a>
-          </div>
+        <div class="areas-header">Áreas PARNET</div>
+        <div class="areas-buttons">
+          <a href="{{ url_for('areas_p.certificaciones') }}" class="area-button">Certificaciones</a>
+          <a href="{{ url_for('areas_p.telecomunicaciones') }}" class="area-button">Telecomunicaciones</a>
+          <a href="{{ url_for('areas_p.redes_electricas') }}" class="area-button">Redes Eléctricas</a>
+          <a href="{{ url_for('areas_p.circuito_cerrado_tv') }}" class="area-button">Circuito Cerrado TV</a>
+          <a href="{{ url_for('areas_p.corriente_regulada') }}" class="area-button">Corriente Regulada</a>
+          <a href="{{ url_for('areas_p.data_centers') }}" class="area-button">Data Centers</a>
+          <a href="{{ url_for('areas_p.fibra_optica') }}" class="area-button">Fibra Óptica</a>
+          <a href="{{ url_for('areas_p.cables_estructurados') }}" class="area-button">Cables Estructurados</a>
+          <a href="{{ url_for('areas_p.polizas') }}" class="area-button">Pólizas</a>
+          <a href="{{ url_for('areas_p.sugerencias') }}" class="area-button">Sugerencias</a>
+          <a href="{{ url_for('auth.login') }}" class="area-button">Administración</a>
         </div>
+        </div>
+
 
         <!-- Marcas y Proveedores -->
         <div class="brands-section">
