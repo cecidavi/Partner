@@ -82,29 +82,41 @@
 
       <div class="form-group">
         <label for="{{ form.nombre.id }}">Nombre Completo</label>
-        {{ form.nombre(class_="", id=form.nombre.id, placeholder="Escribe tu nombre completo") }}
+        {{ form.nombre(id=form.nombre.id, placeholder="Escribe tu nombre completo") }}
       </div>
 
       <div class="form-group">
         <label for="{{ form.correo.id }}">Correo Electrónico</label>
-        {{ form.correo(class_="", id=form.correo.id, placeholder="tucorreo@ejemplo.com") }}
+        {{ form.correo(id=form.correo.id, placeholder="tucorreo@ejemplo.com") }}
       </div>
 
       <div class="form-group">
-        <label for="{{ form.area.id }}">Selecciona el Servicio</label>
-        {{ form.area(class_="", id=form.area.id) }}
+        <label for="{{ form.area.id }}">Área</label>
+        {{ form.area(
+             id=form.area.id,
+             onchange="this.form.submit()"
+        ) }}
+      </div>
+
+      <div class="form-group">
+        <label for="{{ form.servicio.id }}">Servicio</label>
+        {{ form.servicio(id=form.servicio.id) }}
       </div>
 
       <div class="form-group">
         <label for="{{ form.detalle.id }}">Detalles de la Solicitud</label>
-        {{ form.detalle(rows=4, class_="", id=form.detalle.id, placeholder="¿En qué podemos ayudarte? Describe aquí los detalles…") }}
+        {{ form.detalle(
+             rows=4,
+             id=form.detalle.id,
+             placeholder="¿En qué podemos ayudarte? Describe aquí los detalles…"
+        ) }}
       </div>
 
       <div class="form-group">
-        {{ form.recaptcha }}
+        {{ form.recaptcha() }}
       </div>
 
-      <button type="submit">{{ form.submit.label.text }}</button>
+      <button type="submit">Enviar Solicitud</button>
     </form>
   </section>
 {% endblock %}
