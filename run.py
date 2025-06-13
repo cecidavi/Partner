@@ -4,3 +4,7 @@ app = create_app()
 
 if __name__ == '__main__':
     app.run(debug=True)
+
+
+import os
+print("DATABASE_URL:", os.environ.get("DATABASE_URL"))
